@@ -10,7 +10,7 @@ import jpackage.*;
 interface login_user {
     void login_user();
 
-    JFrame f = new JFrame("Clinic appointment Management System");
+    static JFrame f = new JFrame("Clinic appointment Management System");
 }
 
 // Aayush - Create account class - start
@@ -105,32 +105,51 @@ class login extends JFrame implements login_user, ActionListener {
             String user_name = t1.getText();
             String user_password = t2.getText();
             String jdbcURL = "jdbc:postgresql://localhost:5432/clinic_appointment_management_System";
-            String username = "postgres";
-            String password = "paarth@2812";
+            String username_db = "postgres";
+            String password_db = "paarth@2812";
 
             try {
-                Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+                Connection connection = DriverManager.getConnection(jdbcURL, username_db, password_db);
 
                 String sql = " SELECT CASE WHEN EXISTS ( SELECT * FROM user_account WHERE user_password=crypt(?,user_password) and username=?) THEN 'TRUE' ELSE 'FALSE' END";
 
+                String sql1 = " SELECT CASE WHEN EXISTS ( SELECT * FROM admin_account WHERE admin_password=crypt(?,admin_password) and admin_username=?) THEN 'TRUE' ELSE 'FALSE' END";
                 PreparedStatement statement = connection.prepareStatement(sql);
 
                 statement.setString(1, user_password);
                 statement.setString(2, user_name);
 
+                PreparedStatement statement1 = connection.prepareStatement(sql);
+
+                statement1.setString(1, user_password);
+                statement1.setString(2, user_name);
+
+                ResultSet b = statement1.executeQuery();
+
                 ResultSet a = statement.executeQuery();
                 while (a.next()) {
                     String value = a.getString("case");
                     if (value.equals("TRUE")) {
-                        l3.setText("Logged In Successfully");
+                        JOptionPane.showMessageDialog(f, "Logged in Successfully");
                     } else if (value.equals("FALSE")) {
                         JOptionPane.showMessageDialog(f, "Please Enter a Valid Password or username");
                     }
                 }
 
+                while (b.next()) {
+                    String value = b.getString("case");
+                    if (value.equals("TRUE")) {
+                        JOptionPane.showMessageDialog(f, "Logged in Successfully as admin");
+                    } else if (value.equals("FALSE")) {
+                        JOptionPane.showMessageDialog(f, "Please Enter a Valid Password or username");
+                    }
+
+                }
+
                 connection.close();
             } catch (SQLException ex) {
-                l3.setText("Failed to connect the servers!! Connection Timed Out");
+                JOptionPane.showMessageDialog(f, "Failed to connect the servers!! Connection Timed Out" + "-" + ex);
+
             }
         }
 
@@ -260,6 +279,49 @@ class forgotpassword extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == b1) {
+            String username = t1.getText();
+            String user_pasword = t2.getText();
+            String confirm_password = t3.getText();
+            String jdbcURL = "jdbc:postgresql://localhost:5432/clinic_appointment_management_System";
+            String username_db = "postgres";
+            String password_db = "paarth@2812";
+
+            try {
+
+                Connection connection = DriverManager.getConnection(jdbcURL, username_db, password_db);
+
+                String sql = "SELECT CASE WHEN EXISTS ( SELECT * FROM user_account WHERE username=?) THEN 'TRUE' ELSE 'FALSE' END";
+
+                PreparedStatement statement1 = connection.prepareStatement(sql);
+
+                statement1.setString(1, username);
+
+                ResultSet data = statement1.executeQuery();
+
+                while (data.next()) {
+                    String value = data.getString("case");
+                    if (user_pasword.equals(confirm_password)) {
+                        if (value.equals("TRUE")) {
+                            String sql1 = " update user_account set user_password=crypt(?,user_password) where username=?";
+                            PreparedStatement stmt = connection.prepareStatement(sql1);
+                            stmt.setString(1, user_pasword);
+                            stmt.setString(2, username);
+                            stmt.executeUpdate();
+                            JOptionPane.showMessageDialog(null, "Successfully Updated Password");
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No Such Username Exists");
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Entered password and Confirm password do not match");
+                    }
+                }
+                connection.close();
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Please Enter proper data in Proper Format");
+            }
 
         }
     }
