@@ -5,26 +5,30 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import jpackage.*;
 
 interface login_user {
-    void login_user();
 
     static JFrame f = new JFrame("Clinic appointment Management System");
 }
 
 // Aayush - Create account class - start
-class create_account extends JFrame implements ActionListener{
+class create_account extends JFrame implements ActionListener {
     JLabel l, l1, l2, l3, l4, l5, l6;
-    JButton b1, b2, b3;
+    JButton button1, b2;
     JTextField t1, t2, t3, t4;
     JPasswordField t5, t6;
     JCheckBox showpassword, showpassword1;
 
-    public create_account(JFrame f){
+    public create_account(JFrame f) {
         f.getContentPane().removeAll();
         f.repaint();
-        f.getContentPane().setBackground(Color.green);
+        // f.getContentPane().setBackground(Color.green);
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setDefaultLookAndFeelDecorated(true);
@@ -32,6 +36,7 @@ class create_account extends JFrame implements ActionListener{
         l = new JLabel("Create your Account");
         l.setBounds(640, 80, 400, 30);
         l.setFont(new Font("Helvetica", Font.BOLD, 26));
+        l.setForeground(Color.red);
         f.add(l);
 
         l1 = new JLabel("First Name:");
@@ -92,7 +97,6 @@ class create_account extends JFrame implements ActionListener{
         showpassword = new JCheckBox("Show Password");
         showpassword.setBounds(680, 450, 150, 30);
         showpassword.setFont(new Font("Helvetica", Font.BOLD, 14));
-        showpassword.setBackground(Color.GREEN);
         showpassword.addActionListener(this);
         f.add(showpassword);
 
@@ -110,15 +114,9 @@ class create_account extends JFrame implements ActionListener{
         showpassword1 = new JCheckBox("Show Password");
         showpassword1.setBounds(680, 560, 150, 30);
         showpassword1.setFont(new Font("Helvetica", Font.BOLD, 14));
-        showpassword1.setBackground(Color.GREEN);
         showpassword1.addActionListener(this);
-        f.add(showpassword1);
 
-        b1 = new JButton("Create Account");
-        b1.setBounds(490, 620, 250, 35);
-        b1.setFont(new Font("Helvetica", Font.BOLD, 17));
-        b1.addActionListener(this);
-        f.add(b1);
+        f.add(showpassword1);
 
         b2 = new JButton("Go Back to login");
         b2.setBounds(770, 620, 250, 35);
@@ -126,12 +124,16 @@ class create_account extends JFrame implements ActionListener{
         b2.addActionListener(this);
         f.add(b2);
 
+        button1 = new JButton("Create Account");
+        button1.setBounds(490, 620, 250, 35);
+        button1.setFont(new Font("Helvetica", Font.BOLD, 17));
+        button1.addActionListener(this);
+        f.add(button1);
+
     }
-    
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
 
         if (e.getSource() == showpassword) {
             if (showpassword.isSelected()) {
@@ -149,15 +151,93 @@ class create_account extends JFrame implements ActionListener{
             }
         }
 
-        if (e.getSource() == b2) {
+        if (e.getSource() == button1) {
+            String f_name = t1.getText();
+            String l_name = t2.getText();
+            String mobile_no = t3.getText();
+            String user_name = t4.getText();
+            String user_password = t5.getText();
+            String confirm_password = t6.getText();
+            String jdbcURL = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d1itre8d1ofteb";
+            String username_db = "tklsjaddlzcmwj";
+            String password_db = "0a962d95cc35d5a21dc4081cf4bca8abe21fa22727cee6e31b746df3cb4ffd47";
 
-            login obj = new login();
-            obj.login_user();
+            try {
+                Connection connection = DriverManager.getConnection(jdbcURL, username_db, password_db);
+                Long contact = Long.parseLong(mobile_no);
+                boolean data = f_name.matches("[a-zA-Z]+");
+                boolean data1 = l_name.matches("[a-zA-Z]+");
+                boolean data2 = mobile_no.matches("[0-9]+");
+
+                if ((!t1.getText().equals("")) && (!t2.getText().equals("")) && (!t3.getText().equals(""))
+                        && (!t4.getText().equals("")) && (!t5.getText().equals("")) && (!t6.getText().equals(""))) {
+
+                    String sqlquery = "SELECT CASE WHEN EXISTS ( SELECT * FROM user_account WHERE username=?) THEN 'TRUEUSER' ELSE 'FALSE' END";
+                    PreparedStatement statementcheck = connection.prepareStatement(sqlquery);
+                    statementcheck.setString(1, user_name);
+
+                    ResultSet user_name_check = statementcheck.executeQuery();
+                    while (user_name_check.next()) {
+                        String value = user_name_check.getString("case");
+
+                        if (value.equals("TRUEUSER")) {
+                            JOptionPane.showMessageDialog(null, "Username not Available");
+                        } else {
+
+                            if ((data) && (data1) && (data2) && mobile_no.length() == 10 && user_name.length() <= 15
+                                    && user_password.equals(confirm_password)) {
+                                String sql_insert = "INSERT INTO user_account (fname,lname,username,user_password,mobile_no) VALUES (?,?,?,crypt(?,gen_salt('bf')),?)";
+
+                                PreparedStatement statement_insert = connection.prepareStatement(sql_insert);
+                                statement_insert.setString(1, f_name);
+                                statement_insert.setString(2, l_name);
+                                statement_insert.setString(3, user_name);
+                                statement_insert.setString(4, user_password);
+                                statement_insert.setLong(5, contact);
+
+                                statement_insert.executeUpdate();
+                                JOptionPane.showMessageDialog(null, "Account created Successfully");
+                                new login();
+
+                            } else if ((!data)) {
+                                JOptionPane.showMessageDialog(null, "Only Characters are allowed for First Name");
+                            } else if ((!data1)) {
+                                JOptionPane.showMessageDialog(null, "Only Characters are allowed for Last Name");
+                            } else if ((!data2)) {
+                                JOptionPane.showMessageDialog(null, "Only Characters are allowed for Last Name");
+                            } else if (mobile_no.length() != 10) {
+                                JOptionPane.showMessageDialog(null, "Invalid Mobile Number");
+                            } else if (user_name.length() > 15) {
+                                JOptionPane.showMessageDialog(null, "Username should not exceed 15 characters");
+                            } else if (!user_password.equals(confirm_password)) {
+                                JOptionPane.showMessageDialog(null,
+                                        "Entered password does not match the Confirm Password");
+                            }
+                        }
+                    }
+
+                    connection.close();
+                } else {
+                    JOptionPane.showMessageDialog(null, "All Input Fields are Required");
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Server Error!!");
+            }
+
+            catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "All Input Fields are required");
+            }
 
         }
-        
+
+        if (e.getSource() == b2) {
+
+            new login();
+
+        }
+
     }
-    
+
 }
 // end
 
@@ -168,11 +248,17 @@ class login extends JFrame implements login_user, ActionListener {
     JPasswordField t2;
     JCheckBox showpassword;
 
-    public void login_user() {
+    public login() {
 
         f.getContentPane().removeAll();
         f.repaint();
-        f.getContentPane().setBackground(Color.green);
+
+        JLabel background = new JLabel(new ImageIcon(
+                "D:\\SY Btech IT\\Java Programming\\java mini project\\mini project-java\\src\\jpackage\\images.jpg"));
+
+        f.add(background);
+        f.setContentPane(background);
+
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setDefaultLookAndFeelDecorated(true);
@@ -230,7 +316,6 @@ class login extends JFrame implements login_user, ActionListener {
         showpassword = new JCheckBox("Show Password");
         showpassword.setBounds(765, 360, 150, 30);
         showpassword.setFont(new Font("Helvetica", Font.BOLD, 14));
-        showpassword.setBackground(Color.GREEN);
         showpassword.addActionListener(this);
         f.add(showpassword);
 
@@ -248,51 +333,41 @@ class login extends JFrame implements login_user, ActionListener {
         if (e.getSource() == b1) {
             String user_name = t1.getText();
             String user_password = t2.getText();
-            String jdbcURL = "jdbc:postgresql://localhost:5432/clinic_appointment_management_System";
-            String username_db = "postgres";
-            String password_db = "paarth@2812";
 
             try {
+
+                String jdbcURL = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d1itre8d1ofteb";
+                String username_db = "tklsjaddlzcmwj";
+                String password_db = "0a962d95cc35d5a21dc4081cf4bca8abe21fa22727cee6e31b746df3cb4ffd47";
                 Connection connection = DriverManager.getConnection(jdbcURL, username_db, password_db);
 
-                String sql = " SELECT CASE WHEN EXISTS ( SELECT * FROM user_account WHERE user_password=crypt(?,user_password) and username=?) THEN 'TRUE' ELSE 'FALSE' END";
+                String sql = " SELECT CASE WHEN EXISTS ( SELECT * FROM user_account WHERE user_password=crypt(?,user_password) and username=?) THEN 'TRUEUSER' WHEN EXISTS ( SELECT * FROM admin_account WHERE admin_password=crypt(?,admin_password) and admin_username=?)  THEN 'TRUEADMIN' ELSE 'FALSE' END";
 
-                String sql1 = " SELECT CASE WHEN EXISTS ( SELECT * FROM admin_account WHERE admin_password=crypt(?,admin_password) and admin_username=?) THEN 'TRUE' ELSE 'FALSE' END";
                 PreparedStatement statement = connection.prepareStatement(sql);
 
                 statement.setString(1, user_password);
                 statement.setString(2, user_name);
-
-                PreparedStatement statement1 = connection.prepareStatement(sql);
-
-                statement1.setString(1, user_password);
-                statement1.setString(2, user_name);
-
-                ResultSet b = statement1.executeQuery();
+                statement.setString(3, user_password);
+                statement.setString(4, user_name);
 
                 ResultSet a = statement.executeQuery();
                 while (a.next()) {
                     String value = a.getString("case");
-                    if (value.equals("TRUE")) {
+                    if (value.equals("TRUEUSER")) {
                         JOptionPane.showMessageDialog(f, "Logged in Successfully");
+                    } else if (value.equals("TRUEADMIN")) {
+                        JOptionPane.showMessageDialog(f, "Logged in Successfully as Admin");
                     } else if (value.equals("FALSE")) {
-                        JOptionPane.showMessageDialog(f, "Please Enter a Valid Password or username");
+                        JOptionPane.showMessageDialog(f, "Please Enter a Valid Username or Password");
                     }
-                }
-
-                while (b.next()) {
-                    String value = b.getString("case");
-                    if (value.equals("TRUE")) {
-                        JOptionPane.showMessageDialog(f, "Logged in Successfully as admin");
-                    } else if (value.equals("FALSE")) {
-                        JOptionPane.showMessageDialog(f, "Please Enter a Valid Password or username");
-                    }
-
                 }
 
                 connection.close();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(f, "Failed to connect the servers!! Connection Timed Out" + "-" + ex);
+
+                // JOptionPane.showMessageDialog(f, "Failed to connect the servers!! Connection
+                // Timed Out");
+                JOptionPane.showMessageDialog(f, ex);
 
             }
         }
@@ -309,12 +384,12 @@ class login extends JFrame implements login_user, ActionListener {
 
             f.getContentPane().removeAll();
             f.repaint();
-            forgotpassword forgot = new forgotpassword(f);
+            new forgotpassword(f);
 
         }
 
-        if (e.getSource() == b3){
-            create_account account = new create_account(f);
+        if (e.getSource() == b3) {
+            new create_account(f);
         }
 
     }
@@ -364,7 +439,6 @@ class forgotpassword extends JFrame implements ActionListener {
         showpassword = new JCheckBox("Show Password");
         showpassword.setBounds(765, 340, 150, 30);
         showpassword.setFont(new Font("Helvetica", Font.BOLD, 14));
-        showpassword.setBackground(Color.GREEN);
         showpassword.addActionListener(this);
         frame.add(showpassword);
 
@@ -383,7 +457,6 @@ class forgotpassword extends JFrame implements ActionListener {
         showpassword1 = new JCheckBox("Show Password");
         showpassword1.setBounds(765, 430, 150, 30);
         showpassword1.setFont(new Font("Helvetica", Font.BOLD, 14));
-        showpassword1.setBackground(Color.GREEN);
         showpassword1.addActionListener(this);
         frame.add(showpassword1);
 
@@ -421,8 +494,7 @@ class forgotpassword extends JFrame implements ActionListener {
 
         if (e.getSource() == b2) {
 
-            login obj = new login();
-            obj.login_user();
+            new login();
 
         }
 
@@ -430,10 +502,9 @@ class forgotpassword extends JFrame implements ActionListener {
             String username = t1.getText();
             String user_pasword = t2.getText();
             String confirm_password = t3.getText();
-            String jdbcURL = "jdbc:postgresql://localhost:5432/clinic_appointment_management_System";
-            String username_db = "postgres";
-            String password_db = "paarth@2812";
-
+            String jdbcURL = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d1itre8d1ofteb";
+            String username_db = "tklsjaddlzcmwj";
+            String password_db = "0a962d95cc35d5a21dc4081cf4bca8abe21fa22727cee6e31b746df3cb4ffd47";
             try {
 
                 Connection connection = DriverManager.getConnection(jdbcURL, username_db, password_db);
@@ -455,7 +526,8 @@ class forgotpassword extends JFrame implements ActionListener {
                             stmt.setString(1, user_pasword);
                             stmt.setString(2, username);
                             stmt.executeUpdate();
-                            JOptionPane.showMessageDialog(null, "Successfully Updated Password");
+                            JOptionPane.showMessageDialog(null, "Password Updated Successfully");
+                            new login();
 
                         } else {
                             JOptionPane.showMessageDialog(null, "No Such Username Exists");
@@ -479,8 +551,8 @@ public class App {
 
     public static void main(String[] args) throws Exception {
 
-        login user = new login();
-        user.login_user();
+        new login();
 
     }
+
 }
