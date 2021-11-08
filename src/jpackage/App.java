@@ -42,6 +42,7 @@ class create_account extends JFrame implements ActionListener {
         l1 = new JLabel("First Name:");
         l1.setBounds(565, 140, 225, 30);
         l1.setFont(new Font("Helvetica", Font.BOLD, 20));
+        l1.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(l1);
         t1 = new RoundJTextField(15);
         t1.setBounds(490, 180, 250, 30);
@@ -53,6 +54,7 @@ class create_account extends JFrame implements ActionListener {
         l2 = new JLabel("Last Name:");
         l2.setBounds(845, 140, 225, 30);
         l2.setFont(new Font("Helvetica", Font.BOLD, 20));
+        l2.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(l2);
         t2 = new RoundJTextField(15);
         t2.setBounds(770, 180, 250, 30);
@@ -64,6 +66,7 @@ class create_account extends JFrame implements ActionListener {
         l3 = new JLabel("Mobile Number:");
         l3.setBounds(680, 220, 225, 30);
         l3.setFont(new Font("Helvetica", Font.BOLD, 20));
+        l3.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(l3);
         t3 = new RoundJTextField(15);
         t3.setBounds(490, 260, 532, 30);
@@ -75,6 +78,7 @@ class create_account extends JFrame implements ActionListener {
         l4 = new JLabel("Username:");
         l4.setBounds(710, 300, 225, 30);
         l4.setFont(new Font("Helvetica", Font.BOLD, 20));
+        l4.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(l4);
         t4 = new RoundJTextField(15);
         t4.setBounds(490, 340, 532, 30);
@@ -86,6 +90,7 @@ class create_account extends JFrame implements ActionListener {
         l5 = new JLabel("Enter your Password:");
         l5.setBounds(655, 380, 225, 30);
         l5.setFont(new Font("Helvetica", Font.BOLD, 20));
+        l5.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(l5);
         t5 = new RoundPasswordField(15);
         t5.setBounds(490, 420, 532, 30);
@@ -98,11 +103,14 @@ class create_account extends JFrame implements ActionListener {
         showpassword.setBounds(680, 450, 150, 30);
         showpassword.setFont(new Font("Helvetica", Font.BOLD, 14));
         showpassword.addActionListener(this);
+        showpassword.setOpaque(false);
+        showpassword.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(showpassword);
 
         l6 = new JLabel("Confirm your Password:");
         l6.setBounds(650, 490, 250, 30);
         l6.setFont(new Font("Helvetica", Font.BOLD, 20));
+        l6.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(l6);
         t6 = new RoundPasswordField(15);
         t6.setBounds(490, 530, 532, 30);
@@ -115,7 +123,8 @@ class create_account extends JFrame implements ActionListener {
         showpassword1.setBounds(680, 560, 150, 30);
         showpassword1.setFont(new Font("Helvetica", Font.BOLD, 14));
         showpassword1.addActionListener(this);
-
+        showpassword1.setOpaque(false);
+        showpassword1.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(showpassword1);
 
         b2 = new JButton("Go Back to login");
@@ -254,7 +263,7 @@ class login extends JFrame implements login_user, ActionListener {
         f.repaint();
 
         JLabel background = new JLabel(new ImageIcon(
-                "D:\\SY Btech IT\\Java Programming\\java mini project\\mini project-java\\src\\jpackage\\images.jpg"));
+                "E:\\Clinic_appointment_management_system\\clinic_appointment_management_System\\src\\jpackage\\image.jpg"));
 
         f.add(background);
         f.setContentPane(background);
@@ -271,11 +280,13 @@ class login extends JFrame implements login_user, ActionListener {
         l4 = new JLabel("Sign In to your Account");
         l4.setBounds(600, 170, 400, 30);
         l4.setFont(new Font("Helvetica", Font.BOLD, 26));
+        l4.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(l4);
 
         l1 = new JLabel("Enter your Username:");
         l1.setBounds(540, 240, 225, 30);
         l1.setFont(new Font("Helvetica", Font.BOLD, 20));
+        l1.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(l1);
         t1 = new RoundJTextField(15);
         t1.setBounds(765, 240, 200, 30);
@@ -287,6 +298,7 @@ class login extends JFrame implements login_user, ActionListener {
         l2 = new JLabel("Enter your Password:");
         l2.setBounds(540, 320, 225, 30);
         l2.setFont(new Font("Helvetica", Font.BOLD, 20));
+        l2.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(l2);
         t2 = new RoundPasswordField(15);
         t2.setBounds(765, 320, 200, 30);
@@ -317,6 +329,8 @@ class login extends JFrame implements login_user, ActionListener {
         showpassword.setBounds(765, 360, 150, 30);
         showpassword.setFont(new Font("Helvetica", Font.BOLD, 14));
         showpassword.addActionListener(this);
+        showpassword.setOpaque(false);
+        showpassword.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(showpassword);
 
         l3 = new JLabel();
@@ -355,6 +369,7 @@ class login extends JFrame implements login_user, ActionListener {
                     String value = a.getString("case");
                     if (value.equals("TRUEUSER")) {
                         JOptionPane.showMessageDialog(f, "Logged in Successfully");
+                        new menu(f);
                     } else if (value.equals("TRUEADMIN")) {
                         JOptionPane.showMessageDialog(f, "Logged in Successfully as Admin");
                     } else if (value.equals("FALSE")) {
@@ -415,8 +430,8 @@ class forgotpassword extends JFrame implements ActionListener {
         l1 = new JLabel("Enter your Username:");
         l1.setBounds(540, 240, 225, 30);
         l1.setFont(new Font("Helvetica", Font.BOLD, 20));
+        l1.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         frame.add(l1);
-
         t1 = new RoundJTextField(15);
         t1.setBounds(765, 240, 200, 30);
         t1.setBackground(Color.white);
@@ -427,8 +442,8 @@ class forgotpassword extends JFrame implements ActionListener {
         l2 = new JLabel("Enter new Password:");
         l2.setBounds(540, 300, 225, 30);
         l2.setFont(new Font("Helvetica", Font.BOLD, 20));
+        l2.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         frame.add(l2);
-
         t2 = new RoundPasswordField(15);
         t2.setBounds(765, 300, 200, 30);
         t2.setBackground(Color.white);
@@ -440,13 +455,15 @@ class forgotpassword extends JFrame implements ActionListener {
         showpassword.setBounds(765, 340, 150, 30);
         showpassword.setFont(new Font("Helvetica", Font.BOLD, 14));
         showpassword.addActionListener(this);
+        showpassword.setOpaque(false);
+        showpassword.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         frame.add(showpassword);
 
         l3 = new JLabel("Confirm new Password:");
         l3.setBounds(540, 390, 225, 30);
         l3.setFont(new Font("Helvetica", Font.BOLD, 20));
+        l3.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         frame.add(l3);
-
         t3 = new RoundPasswordField(15);
         t3.setBounds(770, 390, 200, 30);
         t3.setBackground(Color.white);
@@ -458,6 +475,8 @@ class forgotpassword extends JFrame implements ActionListener {
         showpassword1.setBounds(765, 430, 150, 30);
         showpassword1.setFont(new Font("Helvetica", Font.BOLD, 14));
         showpassword1.addActionListener(this);
+        showpassword1.setOpaque(false);
+        showpassword1.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         frame.add(showpassword1);
 
         b1 = new JButton("Reset Password");
