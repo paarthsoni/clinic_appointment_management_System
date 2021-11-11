@@ -1,30 +1,47 @@
 package jpackage;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+import java.time.format.DateTimeFormatter;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.chrono.ChronoZonedDateTime;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.table.TableModel;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import jpackage.*;
-
-public class slot_booking extends JFrame implements ActionListener , login_user {
+public class slot_booking extends JFrame implements ActionListener, login_user {
 
     JLabel l, l1, l2, l3, l4, l5, l6, l7, l8, l9;
     JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17, b18, b19;
     JTextField t1, t2, t3, t4, t5, t6, t7;
     JRadioButton male, female, other;
+    JTextArea a1;
+    String user_user_name;
 
-    public slot_booking(JFrame f){
+    public slot_booking(JFrame f, String user_username) {
+
+        user_user_name = user_username;
         f.getContentPane().removeAll();
         f.repaint();
         f.getContentPane().setBackground(Color.green);
@@ -56,15 +73,12 @@ public class slot_booking extends JFrame implements ActionListener , login_user 
         t2.setFont(new Font("Helvetica", Font.BOLD, 15));
         f.add(t2);
 
-        l3 = new JLabel("Date of Birth:");
+        l3 = new JLabel("Patient's Age:");
         l3.setBounds(250, 130, 225, 30);
         l3.setFont(new Font("Helvetica", Font.BOLD, 20));
         l3.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(l3);
-        // UtilDateModel model = new UtilDateModel();
-        // JDatePanelImpl datePanel = new JDatePanelImpl(model, null);
-        // JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, null);
-        // f.add(datePicker);
+
         t3 = new RoundJTextField(15);
         t3.setBounds(50, 170, 500, 30);
         t3.setBackground(Color.white);
@@ -107,11 +121,16 @@ public class slot_booking extends JFrame implements ActionListener , login_user 
         t4 = new RoundJTextField(15);
         t4.setBounds(50, 340, 500, 30);
         t4.setBackground(Color.white);
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String strDate = formatter.format(date);
+        t4.setText(strDate);
         t4.setForeground(Color.black);
         t4.setFont(new Font("Helvetica", Font.BOLD, 15));
+        t4.setEditable(false);
         f.add(t4);
 
-        l6 = new JLabel("Time of Appointment:");
+        l6 = new JLabel("Slot of Appointment:");
         l6.setBounds(200, 380, 225, 30);
         l6.setFont(new Font("Helvetica", Font.BOLD, 20));
         l6.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
@@ -121,6 +140,8 @@ public class slot_booking extends JFrame implements ActionListener , login_user 
         t5.setBackground(Color.white);
         t5.setForeground(Color.black);
         t5.setFont(new Font("Helvetica", Font.BOLD, 15));
+        t5.setText("Your Time Slot will be displayed here");
+        t5.setEditable(false);
         f.add(t5);
 
         l7 = new JLabel("Phone Number:");
@@ -135,17 +156,17 @@ public class slot_booking extends JFrame implements ActionListener , login_user 
         t6.setFont(new Font("Helvetica", Font.BOLD, 15));
         f.add(t6);
 
-        l8 = new JLabel("Patient's Problem:");
-        l8.setBounds(210, 540, 225, 30);
+        l8 = new JLabel("Patient's Problem (Optional):");
+        l8.setBounds(160, 540, 310, 30);
         l8.setFont(new Font("Helvetica", Font.BOLD, 20));
         l8.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(l8);
-        t7 = new RoundJTextField(15);
-        t7.setBounds(50, 580, 500, 170);
-        t7.setBackground(Color.white);
-        t7.setForeground(Color.black);
-        t7.setFont(new Font("Helvetica", Font.BOLD, 15));
-        f.add(t7);
+        a1 = new RoundJTextArea();
+        a1.setBounds(50, 580, 500, 170);
+        a1.setBackground(Color.white);
+        a1.setForeground(Color.black);
+        a1.setFont(new Font("Helvetica", Font.BOLD, 15));
+        f.add(a1);
 
         l9 = new JLabel("Morning Slots:");
         l9.setBounds(1000, 50, 225, 30);
@@ -159,49 +180,49 @@ public class slot_booking extends JFrame implements ActionListener , login_user 
         b19.addActionListener(this);
         f.add(b19);
 
-        b1 = new JButton("9:00 - 9:30");
+        b1 = new JButton();
         b1.setBounds(700, 100, 250, 50);
         b1.setFont(new Font("Helvetica", Font.BOLD, 17));
         b1.addActionListener(this);
         f.add(b1);
 
-        b2 = new JButton("9:30 - 10:00");
+        b2 = new JButton();
         b2.setBounds(980, 100, 250, 50);
         b2.setFont(new Font("Helvetica", Font.BOLD, 17));
         b2.addActionListener(this);
         f.add(b2);
 
-        b3 = new JButton("10:00 - 10:30");
+        b3 = new JButton();
         b3.setBounds(1260, 100, 250, 50);
         b3.setFont(new Font("Helvetica", Font.BOLD, 17));
         b3.addActionListener(this);
         f.add(b3);
 
-        b4 = new JButton("10:30 - 11:00");
+        b4 = new JButton();
         b4.setBounds(700, 170, 250, 50);
         b4.setFont(new Font("Helvetica", Font.BOLD, 17));
         b4.addActionListener(this);
         f.add(b4);
 
-        b5 = new JButton("11:00 - 11:30");
+        b5 = new JButton();
         b5.setBounds(980, 170, 250, 50);
         b5.setFont(new Font("Helvetica", Font.BOLD, 17));
         b5.addActionListener(this);
         f.add(b5);
 
-        b6 = new JButton("11:30 - 12:00");
+        b6 = new JButton();
         b6.setBounds(1260, 170, 250, 50);
         b6.setFont(new Font("Helvetica", Font.BOLD, 17));
         b6.addActionListener(this);
         f.add(b6);
 
-        b7 = new JButton("12:00 - 12:30");
+        b7 = new JButton();
         b7.setBounds(700, 240, 250, 50);
         b7.setFont(new Font("Helvetica", Font.BOLD, 17));
         b7.addActionListener(this);
         f.add(b7);
 
-        b8 = new JButton("12:30 - 01:00");
+        b8 = new JButton();
         b8.setBounds(980, 240, 250, 50);
         b8.setFont(new Font("Helvetica", Font.BOLD, 17));
         b8.addActionListener(this);
@@ -213,53 +234,1064 @@ public class slot_booking extends JFrame implements ActionListener , login_user 
         l9.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(l9);
 
-        b9 = new JButton("5:00 - 5:30");
+        b9 = new JButton();
         b9.setBounds(700, 400, 250, 50);
         b9.setFont(new Font("Helvetica", Font.BOLD, 17));
         b9.addActionListener(this);
         f.add(b9);
 
-        b10 = new JButton("5:30 - 6:00");
+        b10 = new JButton();
         b10.setBounds(980, 400, 250, 50);
         b10.setFont(new Font("Helvetica", Font.BOLD, 17));
         b10.addActionListener(this);
         f.add(b10);
 
-        b11 = new JButton("6:00 - 6:30");
+        b11 = new JButton();
         b11.setBounds(1260, 400, 250, 50);
         b11.setFont(new Font("Helvetica", Font.BOLD, 17));
         b11.addActionListener(this);
         f.add(b11);
 
-        b12 = new JButton("6:30 - 7:00");
+        b12 = new JButton();
         b12.setBounds(700, 470, 250, 50);
         b12.setFont(new Font("Helvetica", Font.BOLD, 17));
         b12.addActionListener(this);
         f.add(b12);
 
-        b13 = new JButton("7:00 - 7:30");
+        b13 = new JButton();
         b13.setBounds(980, 470, 250, 50);
         b13.setFont(new Font("Helvetica", Font.BOLD, 17));
         b13.addActionListener(this);
         f.add(b13);
 
-        b14 = new JButton("7:30 - 8:00");
+        b14 = new JButton();
         b14.setBounds(1260, 470, 250, 50);
         b14.setFont(new Font("Helvetica", Font.BOLD, 17));
         b14.addActionListener(this);
         f.add(b14);
 
-        b15 = new JButton("8:00 - 8:30");
+        b15 = new JButton();
         b15.setBounds(700, 540, 250, 50);
         b15.setFont(new Font("Helvetica", Font.BOLD, 17));
         b15.addActionListener(this);
         f.add(b15);
 
-        b16 = new JButton("8:30 - 9:00");
+        b16 = new JButton();
         b16.setBounds(980, 540, 250, 50);
         b16.setFont(new Font("Helvetica", Font.BOLD, 17));
         b16.addActionListener(this);
         f.add(b16);
+
+        String jdbcURL = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d1itre8d1ofteb";
+        String username_db = "tklsjaddlzcmwj";
+        String password_db = "0a962d95cc35d5a21dc4081cf4bca8abe21fa22727cee6e31b746df3cb4ffd47";
+        try {
+
+            Connection connection = DriverManager.getConnection(jdbcURL, username_db, password_db);
+            String sql = "select slots_available from slots where slot_timing='9:00 - 9:30' ";
+            Statement statement1 = connection.createStatement();
+
+            ResultSet a = statement1.executeQuery(sql);
+
+            while (a.next()) {
+                int value = a.getInt("slots_available");
+                if (value == 0) {
+                    b1.setBackground(Color.red);
+                    b1.setText("9:00 - 9:30" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b1.repaint();
+                    b1.setEnabled(false);
+                } else {
+                    b1.setBackground(Color.green);
+                    b1.setText("9:00 - 9:30" + "   " + "(" + value + ")");
+                }
+
+            }
+
+            String id = TimeZone.getDefault().getID();
+            System.out.println(id);
+            ZoneId zoneId = ZoneId.of(id);
+            ZonedDateTime now = ZonedDateTime.now(zoneId);
+            ZonedDateTime startOfDay = now.toLocalDate().atStartOfDay(zoneId);
+            Duration duration = Duration.between(startOfDay, now);
+            long minutesIntoTheDay = duration.toMinutes();
+            System.out.println(minutesIntoTheDay);
+
+            Date date1 = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("HH");
+            String hour = sdf.format(date1);
+            SimpleDateFormat sdf1 = new SimpleDateFormat("mm");
+            String min = sdf1.format(date1);
+            int hours = Integer.parseInt(hour);
+            int mins = Integer.parseInt(min);
+
+            if (hours >= 9 && minutesIntoTheDay >= 571 && hours <= 23 && mins <= 59) {
+                String disable1 = "update slots set slots_available=0 where slot_timing='9:00 - 9:30'";
+                Statement d_stmt1 = connection.createStatement();
+
+                d_stmt1.executeUpdate(disable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='9:00 - 9:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b1.setBackground(Color.red);
+                    b1.setText("9:00 - 9:30" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b1.setEnabled(false);
+
+                }
+
+            }
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='9:00 - 9:30'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='9:00 - 9:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b1.setBackground(Color.green);
+                    b1.setText("9:00 - 9:30" + "   " + "(" + value + ")");
+                    b1.setEnabled(true);
+
+                }
+
+            }
+
+            String sql1 = "select slots_available from slots where slot_timing='9:30 - 10:00' ";
+            Statement statement2 = connection.createStatement();
+
+            ResultSet b = statement2.executeQuery(sql1);
+
+            while (b.next()) {
+                int value1 = b.getInt("slots_available");
+                if (value1 == 0) {
+                    b2.setBackground(Color.red);
+                    b2.setText("9:30 - 10:00" + "   " + "(" + value1 + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b2.repaint();
+                    b2.setEnabled(false);
+                } else {
+                    b2.setBackground(Color.green);
+                    b2.setText("9:30 - 10:00" + "   " + "(" + value1 + ")");
+                }
+
+            }
+
+            if (hours >= 10 && minutesIntoTheDay >= 601 && hours <= 23 && mins <= 59) {
+                String disable2 = "update slots set slots_available=0 where slot_timing='9:30 - 10:00'";
+                Statement d_stmt2 = connection.createStatement();
+
+                d_stmt2.executeUpdate(disable2);
+
+                String sql_1 = "select slots_available from slots where slot_timing='9:30 - 10:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b2.setBackground(Color.red);
+                    b2.setText("9:30 - 10:00" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b2.setEnabled(false);
+                }
+
+            }
+
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='9:30 - 10:00'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='9:30 - 10:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b2.setBackground(Color.green);
+                    b2.setText("9:30 - 10:00" + "   " + "(" + value + ")");
+                    b2.setEnabled(true);
+
+                }
+
+            }
+
+            String sql2 = "select slots_available from slots where slot_timing='10:00 - 10:30' ";
+            Statement statement3 = connection.createStatement();
+
+            ResultSet c = statement3.executeQuery(sql2);
+
+            while (c.next()) {
+                int value2 = c.getInt("slots_available");
+                if (value2 == 0) {
+                    b3.setBackground(Color.red);
+                    b3.setText("10:00 - 10:30" + "   " + "(" + value2 + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b3.repaint();
+                    b3.setEnabled(false);
+                } else {
+                    b3.setBackground(Color.green);
+                    b3.setText("10:00 - 10:30" + "   " + "(" + value2 + ")");
+                }
+
+            }
+
+            if (hours >= 10 && minutesIntoTheDay >= 631 && hours <= 23 && mins <= 59) {
+                String disable3 = "update slots set slots_available=0 where slot_timing='10:00 - 10:30'";
+                Statement d_stmt3 = connection.createStatement();
+
+                d_stmt3.executeUpdate(disable3);
+
+                String sql_1 = "select slots_available from slots where slot_timing='10:00 - 10:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b3.setBackground(Color.red);
+                    b3.setText("10:00 - 10:30" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b3.setEnabled(false);
+                }
+
+            }
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='10:00 - 10:30'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='10:00 - 10:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b3.setBackground(Color.green);
+                    b3.setText("10:00 - 10:30" + "   " + "(" + value + ")");
+                    b3.setEnabled(true);
+
+                }
+
+            }
+
+            String sql3 = "select slots_available from slots where slot_timing='10:30 - 11:00' ";
+            Statement statement4 = connection.createStatement();
+
+            ResultSet d = statement4.executeQuery(sql3);
+
+            while (d.next()) {
+                int value3 = d.getInt("slots_available");
+                if (value3 == 0) {
+                    b4.setBackground(Color.red);
+                    b4.setText("10:30 - 11:00" + " " + "(" + value3 + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b4.repaint();
+                    b4.setEnabled(false);
+                } else {
+                    b4.setBackground(Color.green);
+                    b4.setText("10:30 - 11:00" + " " + "(" + value3 + ")");
+                }
+
+            }
+
+            if (hours >= 11 && minutesIntoTheDay >= 661 && hours <= 23 && mins <= 59) {
+                String disable4 = "update slots set slots_available=0 where slot_timing='10:30 - 11:00'";
+                Statement d_stmt4 = connection.createStatement();
+
+                d_stmt4.executeUpdate(disable4);
+
+                String sql_1 = "select slots_available from slots where slot_timing='10:30 - 11:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b4.setBackground(Color.red);
+                    b4.setText("10:30 - 11:00" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b4.setEnabled(false);
+                }
+
+            }
+
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='10:30 - 11:00'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='10:30 - 11:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b4.setBackground(Color.green);
+                    b4.setText("10:30 - 11:00" + "   " + "(" + value + ")");
+                    b4.setEnabled(true);
+
+                }
+
+            }
+
+            String sql4 = "select slots_available from slots where slot_timing='11:00 - 11:30' ";
+            Statement statement5 = connection.createStatement();
+
+            ResultSet e = statement5.executeQuery(sql4);
+
+            while (e.next()) {
+                int value4 = e.getInt("slots_available");
+                if (value4 == 0) {
+                    b5.setBackground(Color.red);
+                    b5.setText("11:00 - 11:30" + " " + "(" + value4 + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b5.repaint();
+                    b5.setEnabled(false);
+                } else {
+                    b5.setBackground(Color.green);
+                    b5.setText("11:00 - 11:30" + " " + "(" + value4 + ")");
+                }
+
+            }
+
+            if (hours >= 11 && minutesIntoTheDay >= 691 && hours <= 23 && mins <= 59) {
+                String disable5 = "update slots set slots_available=0 where slot_timing='11:00 - 11:30'";
+                Statement d_stmt5 = connection.createStatement();
+
+                d_stmt5.executeUpdate(disable5);
+
+                String sql_1 = "select slots_available from slots where slot_timing='11:00 - 11:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b5.setBackground(Color.red);
+                    b5.setText("11:00 - 11:30" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b5.setEnabled(false);
+                }
+
+            }
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='11:00 - 11:30'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='11:00 - 11:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b5.setBackground(Color.green);
+                    b5.setText("11:00 - 11:30" + "   " + "(" + value + ")");
+                    b5.setEnabled(true);
+
+                }
+
+            }
+
+            String sql5 = "select slots_available from slots where slot_timing='11:30 - 12:00' ";
+            Statement statement6 = connection.createStatement();
+
+            ResultSet g = statement6.executeQuery(sql5);
+
+            while (g.next()) {
+                int value5 = g.getInt("slots_available");
+                if (value5 == 0) {
+                    b6.setBackground(Color.red);
+                    b6.setText("11:30 - 12:00" + " " + "(" + value5 + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b6.repaint();
+                    b6.setEnabled(false);
+                } else {
+                    b6.setBackground(Color.green);
+                    b6.setText("11:30 - 12:00" + " " + "(" + value5 + ")");
+                }
+
+            }
+
+            if (hours >= 12 && minutesIntoTheDay >= 721 && hours <= 23 && mins <= 59) {
+                String disable6 = "update slots set slots_available=0 where slot_timing='11:30 - 12:00'";
+                Statement d_stmt6 = connection.createStatement();
+
+                d_stmt6.executeUpdate(disable6);
+
+                String sql_1 = "select slots_available from slots where slot_timing='11:30 - 12:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b6.setBackground(Color.red);
+                    b6.setText("11:30 - 12:00" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b6.setEnabled(false);
+                }
+            }
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='11:30 - 12:00'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='11:30 - 12:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b6.setBackground(Color.green);
+                    b6.setText("11:30 - 12:00" + "   " + "(" + value + ")");
+                    b6.setEnabled(true);
+
+                }
+
+            }
+
+            String sql6 = "select slots_available from slots where slot_timing='12:00 - 12:30' ";
+            Statement statement7 = connection.createStatement();
+
+            ResultSet h = statement7.executeQuery(sql6);
+
+            while (h.next()) {
+                int value6 = h.getInt("slots_available");
+                if (value6 == 0) {
+                    b7.setBackground(Color.red);
+                    b7.setText("12:00 - 12:30" + " " + "(" + value6 + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b7.repaint();
+                    b7.setEnabled(false);
+                } else {
+                    b7.setBackground(Color.green);
+                    b7.setText("12:00 - 12:30" + " " + "(" + value6 + ")");
+                }
+
+                if (hours >= 12 && minutesIntoTheDay >= 751 && hours <= 23 && mins <= 59) {
+                    String disable7 = "update slots set slots_available=0 where slot_timing='12:00 - 12:30'";
+                    Statement d_stmt7 = connection.createStatement();
+
+                    d_stmt7.executeUpdate(disable7);
+
+                    String sql_1 = "select slots_available from slots where slot_timing='12:00 - 12:30' ";
+                    Statement statement_1 = connection.createStatement();
+
+                    ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                    while (a1.next()) {
+                        int value = a1.getInt("slots_available");
+                        b7.setBackground(Color.red);
+                        b7.setText("12:00 - 12:30" + "   " + "(" + value + ")");
+                        UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                        b7.setEnabled(false);
+                    }
+
+                }
+
+                if (hours == 0) {
+                    String enable1 = "update slots set slots_available=3 where slot_timing='12:00 - 12:30'";
+                    Statement e_stmt1 = connection.createStatement();
+
+                    e_stmt1.executeUpdate(enable1);
+
+                    String sql_1 = "select slots_available from slots where slot_timing='12:00 - 12:30' ";
+                    Statement statement_1 = connection.createStatement();
+
+                    ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                    while (a1.next()) {
+                        int value = a1.getInt("slots_available");
+                        b7.setBackground(Color.green);
+                        b7.setText("12:00 - 12:30" + "   " + "(" + value + ")");
+                        b7.setEnabled(true);
+
+                    }
+
+                }
+
+                String sql7 = "select slots_available from slots where slot_timing='12:30 - 1:00' ";
+                Statement statement8 = connection.createStatement();
+
+                ResultSet i = statement8.executeQuery(sql7);
+
+                while (i.next()) {
+                    int value7 = i.getInt("slots_available");
+                    if (value7 == 0) {
+                        b8.setBackground(Color.red);
+                        b8.setText("12:30 - 1:00" + " " + "(" + value7 + ")");
+                        UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                        b8.repaint();
+                        b8.setEnabled(false);
+                    } else {
+                        b8.setBackground(Color.green);
+                        b8.setText("12:30 - 1:00" + " " + "(" + value7 + ")");
+                    }
+
+                }
+
+            }
+
+            if (hours >= 13 && minutesIntoTheDay >= 781 && hours <= 23 && mins <= 59) {
+                String disable8 = "update slots set slots_available=0 where slot_timing='12:30 - 1:00'";
+                Statement d_stmt8 = connection.createStatement();
+
+                d_stmt8.executeUpdate(disable8);
+
+                String sql_1 = "select slots_available from slots where slot_timing='12:30 - 1:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b8.setBackground(Color.red);
+                    b8.setText("12:30 - 1:00" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b8.setEnabled(false);
+                }
+
+            }
+
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='12:30 - 1:00'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='12:30 - 1:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b8.setBackground(Color.green);
+                    b8.setText("12:30 - 1:00" + "   " + "(" + value + ")");
+                    b8.setEnabled(true);
+
+                }
+
+            }
+
+            String sql8 = "select slots_available from slots where slot_timing='5:00 - 5:30' ";
+            Statement statement9 = connection.createStatement();
+
+            ResultSet j = statement9.executeQuery(sql8);
+
+            while (j.next()) {
+                int value8 = j.getInt("slots_available");
+                if (value8 == 0) {
+                    b9.setBackground(Color.red);
+                    b4.setText("5:00 - 5:30" + " " + "(" + value8 + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b9.repaint();
+                    b9.setEnabled(false);
+                } else {
+                    b9.setBackground(Color.green);
+                    b9.setText("5:00 - 5:30" + " " + "(" + value8 + ")");
+                }
+
+            }
+
+            if (hours >= 17 && minutesIntoTheDay >= 1051 && hours <= 23 && mins <= 59) {
+                String disable1 = "update slots set slots_available=0 where slot_timing='5:00 - 5:30'";
+                Statement d_stmt1 = connection.createStatement();
+
+                d_stmt1.executeUpdate(disable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='5:00 - 5:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b9.setBackground(Color.red);
+                    b9.setText("5:00 - 5:30" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b9.setEnabled(false);
+                }
+
+            }
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='5:00 - 5:30'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='5:00 - 5:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b9.setBackground(Color.green);
+                    b9.setText("5:00 - 5:30" + "   " + "(" + value + ")");
+                    b9.setEnabled(true);
+
+                }
+
+            }
+
+            String sql9 = "select slots_available from slots where slot_timing='5:30 - 6:00' ";
+            Statement statement10 = connection.createStatement();
+
+            ResultSet k = statement10.executeQuery(sql9);
+
+            while (k.next()) {
+                int value9 = k.getInt("slots_available");
+                if (value9 == 0) {
+                    b10.setBackground(Color.red);
+                    b10.setText("5:30 - 6:00" + " " + "(" + value9 + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b10.repaint();
+                    b10.setEnabled(false);
+                } else {
+                    b10.setBackground(Color.green);
+                    b10.setText("5:30 - 6:00" + " " + "(" + value9 + ")");
+                }
+
+            }
+
+            if (hours >= 18 && minutesIntoTheDay >= 1081 && hours <= 23 && mins <= 59) {
+                String disable1 = "update slots set slots_available=0 where slot_timing='5:30 - 6:00'";
+                Statement d_stmt1 = connection.createStatement();
+
+                d_stmt1.executeUpdate(disable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='5:30 - 6:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b10.setBackground(Color.red);
+                    b10.setText("5:30 - 6:00" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b10.setEnabled(false);
+                }
+
+            }
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='5:30 - 6:00'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='5:30 - 6:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b10.setBackground(Color.green);
+                    b10.setText("5:30 - 6:00" + "   " + "(" + value + ")");
+                    b10.setEnabled(true);
+
+                }
+
+            }
+
+            String sql10 = "select slots_available from slots where slot_timing='6:00 - 6:30' ";
+            Statement statement11 = connection.createStatement();
+
+            ResultSet l = statement11.executeQuery(sql10);
+
+            while (l.next()) {
+                int value10 = l.getInt("slots_available");
+                if (value10 == 0) {
+                    b11.setBackground(Color.red);
+                    b11.setText("6:00 - 6:30" + " " + "(" + value10 + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b11.repaint();
+                    b11.setEnabled(false);
+                } else {
+                    b11.setBackground(Color.green);
+                    b11.setText("6:00 - 6:30" + " " + "(" + value10 + ")");
+                }
+
+            }
+
+            if (hours >= 18 && minutesIntoTheDay >= 1111 && hours <= 23 && mins <= 59) {
+                String disable1 = "update slots set slots_available=0 where slot_timing='6:00 - 6:30'";
+                Statement d_stmt1 = connection.createStatement();
+
+                String sql_1 = "select slots_available from slots where slot_timing='6:00 - 6:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b11.setBackground(Color.red);
+                    b11.setText("6:00 - 6:30" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b11.setEnabled(false);
+                }
+
+                d_stmt1.executeUpdate(disable1);
+
+            }
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='6:00 - 6:30'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='6:00 - 6:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b11.setBackground(Color.green);
+                    b11.setText("6:00 - 6:30" + "   " + "(" + value + ")");
+                    b11.setEnabled(true);
+
+                }
+
+            }
+
+            String sql11 = "select slots_available from slots where slot_timing='6:30 - 7:00' ";
+            Statement statement12 = connection.createStatement();
+
+            ResultSet m = statement12.executeQuery(sql11);
+
+            while (m.next()) {
+                int value11 = m.getInt("slots_available");
+                if (value11 == 0) {
+                    b12.setBackground(Color.red);
+                    b12.setText("6:30 - 7:00" + " " + "(" + value11 + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b12.repaint();
+                    b12.setEnabled(false);
+                } else {
+                    b12.setBackground(Color.green);
+                    b12.setText("6:30 - 7:00" + " " + "(" + value11 + ")");
+                }
+
+            }
+
+            if (hours >= 19 && minutesIntoTheDay >= 1141 && hours <= 23 && mins <= 59) {
+                String disable1 = "update slots set slots_available=0 where slot_timing='6:30 - 7:00'";
+                Statement d_stmt1 = connection.createStatement();
+
+                d_stmt1.executeUpdate(disable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='6:30 - 7:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b12.setBackground(Color.red);
+                    b12.setText("6:30 - 7:00" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b12.setEnabled(false);
+                }
+
+            }
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='6:30 - 7:00'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='6:30 - 7:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b12.setBackground(Color.green);
+                    b12.setText("6:30 - 7:00" + "   " + "(" + value + ")");
+                    b12.setEnabled(true);
+
+                }
+
+            }
+
+            String sql12 = "select slots_available from slots where slot_timing='7:00 - 7:30' ";
+            Statement statement13 = connection.createStatement();
+
+            ResultSet n = statement13.executeQuery(sql12);
+
+            while (n.next()) {
+                int value12 = n.getInt("slots_available");
+                if (value12 == 0) {
+                    b13.setBackground(Color.red);
+                    b13.setText("7:00 - 7:30" + " " + "(" + value12 + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b13.repaint();
+                    b13.setEnabled(false);
+                } else {
+                    b13.setBackground(Color.green);
+                    b13.setText("7:00 - 7:30" + " " + "(" + value12 + ")");
+                }
+
+            }
+
+            if (hours >= 19 && minutesIntoTheDay >= 1171 && hours <= 23 && mins <= 59) {
+                String disable1 = "update slots set slots_available=0 where slot_timing='7:00 - 7:30'";
+                Statement d_stmt1 = connection.createStatement();
+
+                d_stmt1.executeUpdate(disable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='7:00 - 7:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b13.setBackground(Color.red);
+                    b13.setText("7:00 - 7:30" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b13.setEnabled(false);
+                }
+
+            }
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='7:00 - 7:30'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='7:00 - 7:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b13.setBackground(Color.green);
+                    b13.setText("7:00 - 7:30" + "   " + "(" + value + ")");
+                    b13.setEnabled(true);
+
+                }
+
+            }
+
+            String sql13 = "select slots_available from slots where slot_timing='7:30 - 8:00' ";
+            Statement statement14 = connection.createStatement();
+
+            ResultSet o = statement14.executeQuery(sql13);
+
+            while (o.next()) {
+                int value13 = o.getInt("slots_available");
+                if (value13 == 0) {
+                    b14.setBackground(Color.red);
+                    b4.setText("7:30 - 8:00" + " " + "(" + value13 + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b14.repaint();
+                    b4.setEnabled(false);
+                } else {
+                    b14.setBackground(Color.green);
+                    b14.setText("7:30 - 8:00" + " " + "(" + value13 + ")");
+                }
+
+            }
+
+            if (hours >= 20 && minutesIntoTheDay >= 1201 && hours <= 23 && mins <= 59) {
+                String disable1 = "update slots set slots_available=0 where slot_timing='7:30 - 8:00'";
+                Statement d_stmt1 = connection.createStatement();
+
+                d_stmt1.executeUpdate(disable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='7:30 - 8:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b14.setBackground(Color.red);
+                    b14.setText("7:30 - 8:00" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b14.setEnabled(false);
+                }
+
+            }
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='7:30 - 8:00'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='7:30 - 8:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b14.setBackground(Color.green);
+                    b14.setText("7:30 - 8:00" + "   " + "(" + value + ")");
+                    b14.setEnabled(true);
+
+                }
+
+            }
+
+            String sql14 = "select slots_available from slots where slot_timing='8:00 - 8:30' ";
+            Statement statement15 = connection.createStatement();
+
+            ResultSet p = statement15.executeQuery(sql14);
+
+            while (p.next()) {
+                int value = p.getInt("slots_available");
+                if (value == 0) {
+                    b15.setBackground(Color.red);
+                    b15.setText("8:00 - 8:30" + " " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b15.repaint();
+                    b15.setEnabled(false);
+                } else {
+                    b15.setBackground(Color.green);
+                    b15.setText("8:00 - 8:30" + " " + "(" + value + ")");
+                }
+
+            }
+
+            if (hours >= 20 && minutesIntoTheDay >= 1231 && hours <= 23 && mins <= 59) {
+                String disable1 = "update slots set slots_available=0 where slot_timing='8:00 - 8:30'";
+                Statement d_stmt1 = connection.createStatement();
+
+                d_stmt1.executeUpdate(disable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='8:00 - 8:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b15.setBackground(Color.red);
+                    b15.setText("8:00 - 8:30" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b15.setEnabled(false);
+
+                }
+
+            }
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='8:00 - 8:30'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='8:00 - 8:30' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b15.setBackground(Color.green);
+                    b15.setText("8:00 - 8:30" + "   " + "(" + value + ")");
+                    b15.setEnabled(true);
+
+                }
+
+            }
+
+            String sql15 = "select slots_available from slots where slot_timing='8:30 - 9:00' ";
+            Statement statement16 = connection.createStatement();
+
+            ResultSet q = statement16.executeQuery(sql15);
+
+            while (q.next()) {
+                int value = q.getInt("slots_available");
+                if (value == 0) {
+                    b16.setBackground(Color.red);
+                    b16.setText("8:30 - 9:00" + " " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b16.repaint();
+                    b16.setEnabled(false);
+                } else {
+                    b16.setBackground(Color.green);
+                    b16.setText("8:30 - 9:00" + " " + "(" + value + ")");
+                }
+
+            }
+
+            if (hours >= 21 && minutesIntoTheDay >= 1261 && hours <= 23 && mins <= 59) {
+                String disable1 = "update slots set slots_available=0 where slot_timing='8:30 - 9:00'";
+                Statement d_stmt1 = connection.createStatement();
+
+                d_stmt1.executeUpdate(disable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='8:30 - 9:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b16.setBackground(Color.red);
+                    b16.setText("8:30 - 9:00" + "   " + "(" + value + ")");
+                    UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
+                    b16.setEnabled(false);
+                }
+
+            }
+            if (hours == 0) {
+                String enable1 = "update slots set slots_available=3 where slot_timing='8:30 - 9:00'";
+                Statement e_stmt1 = connection.createStatement();
+
+                e_stmt1.executeUpdate(enable1);
+
+                String sql_1 = "select slots_available from slots where slot_timing='8:30 - 9:00' ";
+                Statement statement_1 = connection.createStatement();
+
+                ResultSet a1 = statement_1.executeQuery(sql_1);
+
+                while (a1.next()) {
+                    int value = a1.getInt("slots_available");
+                    b16.setBackground(Color.green);
+                    b16.setText("8:30 - 9:00" + "   " + "(" + value + ")");
+                    b16.setEnabled(true);
+
+                }
+
+            }
+
+            connection.close();
+        }
+
+        catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
 
         b17 = new JButton("Go Back to Menu");
         b17.setBounds(980, 700, 250, 50);
@@ -276,17 +1308,307 @@ public class slot_booking extends JFrame implements ActionListener , login_user 
         b18.setBackground(Color.GREEN);
         b18.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(b18);
-        
+
+        // System.out.println("Time in 24 Hour format - " + hours);
+        // System.out.println("Time in 24 Hour format - " + mins);
+
+        // int time = java.time.LocalTime.now().getHour();
+        // int min = java.time.LocalTime.now().getMinute();
+        // if (hours >= 9 && mins >= 31 && hours <= 23 && mins <= 59) {
+        // b1.setEnabled(false);
+        // b1.setBackground(Color.red);
+        // }
+        // if (hours >= 10 && mins >= 1 && hours <= 23 && mins <= 59) {
+
+        // b2.setEnabled(false);
+        // b2.setBackground(Color.red);
+        // }
+        // if (hours >= 10 && mins >= 31 && hours <= 23 && mins <= 59) {
+
+        // b3.setEnabled(false);
+        // b3.setBackground(Color.red);
+        // }
+        // if (hours >= 11 && mins >= 1 && hours <= 23 && mins <= 59) {
+
+        // b4.setEnabled(false);
+        // b4.setBackground(Color.red);
+        // }
+        // if (hours >= 11 && mins >= 31 && hours <= 23 && mins <= 59) {
+
+        // b5.setEnabled(false);
+        // b5.setBackground(Color.red);
+
+        // }
+        // if (hours >= 12 && mins >= 1 && hours <= 23 && mins <= 59) {
+
+        // b6.setEnabled(false);
+        // b6.setBackground(Color.red);
+        // }
+        // if (hours >= 12 && mins >= 31 && hours <= 23 && mins <= 59) {
+
+        // b7.setEnabled(false);
+        // b7.setBackground(Color.red);
+        // }
+        // if (hours >= 13 && mins >= 1 && hours <= 23 && mins <= 59) {
+
+        // b8.setEnabled(false);
+        // b8.setBackground(Color.red);
+        // }
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
+
+        if (e.getSource() == b1) {
+            t5.setText("9:00 - 9:30");
+            t5.setEditable(false);
+
+        }
+
+        if (e.getSource() == b2) {
+            t5.setText("9:30 - 10:00");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b3) {
+            t5.setText("10:00 - 10:30");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b4) {
+            t5.setText("10:30 - 11:00");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b5) {
+            t5.setText("11:00 - 11:30");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b6) {
+            t5.setText("11:30 - 12:00");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b7) {
+            t5.setText("12:00 - 12:30");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b8) {
+            t5.setText("12:30 - 1:00");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b9) {
+            t5.setText("5:00 - 5:30");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b10) {
+            t5.setText("5:30 - 6:00");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b11) {
+            t5.setText("6:00 - 6:30");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b12) {
+            t5.setText("6:30 - 7:00");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b13) {
+            t5.setText("7:00 - 7:30");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b14) {
+            t5.setText("7:30 - 8:00");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b15) {
+            t5.setText("8:00 - 8:30");
+            t5.setEditable(false);
+
+        }
+        if (e.getSource() == b16) {
+            t5.setText("8:30 - 9:00");
+            t5.setEditable(false);
+
+        }
         if (e.getSource() == b17) {
 
-            new menu(f);
+            new menu(f, user_user_name);
+
+        }
+
+        if (e.getSource() == b18) {
+
+            String p_fname = t1.getText();
+            String p_lname = t2.getText();
+            String age = t3.getText();
+            String gender;
+            if (male.isSelected()) {
+                gender = male.getText();
+
+            } else if (female.isSelected()) {
+                gender = female.getText();
+            } else if (other.isSelected()) {
+                gender = other.getText();
+            } else {
+                gender = "";
+            }
+            String apdate = t4.getText();
+            String aptime = t5.getText();
+            String contact = t6.getText();
+            String patient_problem = a1.getText();
+
+            String jdbcURL = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d1itre8d1ofteb";
+            String username_db = "tklsjaddlzcmwj";
+            String password_db = "0a962d95cc35d5a21dc4081cf4bca8abe21fa22727cee6e31b746df3cb4ffd47";
+
+            boolean data = p_fname.matches("[a-zA-Z]+");
+            boolean data1 = p_lname.matches("[a-zA-Z]+");
+            boolean data2 = age.matches("[0-9]+");
+            boolean data3 = contact.matches("[0-9]+");
+
+            if ((!t1.getText().equals("")) && (!t2.getText().equals("")) && (!t3.getText().equals(""))
+                    && (!t4.getText().equals("")) && (!t5.getText().equals("")) && (!t6.getText().equals(""))) {
+                if (((data) && (data1) && (data2) && (data3) && contact.length() == 10 && male.isSelected()
+                        || female.isSelected() || other.isSelected())
+                        && (!aptime.equals("Your Time Slot will be displayed here"))) {
+
+                    try {
+                        Connection connection = DriverManager.getConnection(jdbcURL, username_db, password_db);
+
+                        String sql_check = "select slots_available from slots where slot_timing=?";
+                        PreparedStatement stmt_check = connection.prepareStatement(sql_check);
+
+                        stmt_check.setString(1, aptime);
+
+                        ResultSet slot_check = stmt_check.executeQuery();
+
+                        while (slot_check.next()) {
+                            int data_check = slot_check.getInt("slots_available");
+
+                            if (data_check != 0) {
+                                String sql_book = "insert into appointments(p_fname,p_lname,age_of_patient,gender,date_of_appointment,time_of_appointment,contact_num,patient_problem) values(?,?,?,?,?,?,?,?)";
+
+                                String app_history = "insert into appointment_history(p_fname,p_lname,age,gender,appointment_date,appointment_time,contact_num,patient_problem,user_username) values(?,?,?,?,?,?,?,?,?)";
+                                PreparedStatement stmt_book = connection.prepareStatement(sql_book);
+
+                                stmt_book.setString(1, p_fname);
+                                stmt_book.setString(2, p_lname);
+                                stmt_book.setString(3, age);
+                                stmt_book.setString(4, gender);
+                                stmt_book.setString(5, apdate);
+                                stmt_book.setString(6, aptime);
+                                stmt_book.setString(7, contact);
+                                stmt_book.setString(8, patient_problem);
+
+                                stmt_book.executeUpdate();
+
+                                PreparedStatement history = connection.prepareStatement(app_history);
+                                history.setString(1, p_fname);
+                                history.setString(2, p_lname);
+                                history.setString(3, age);
+                                history.setString(4, gender);
+                                history.setString(5, apdate);
+                                history.setString(6, aptime);
+                                history.setString(7, contact);
+                                history.setString(8, patient_problem);
+                                history.setString(9, user_user_name);
+
+                                history.executeUpdate();
+
+                                String change = "update slots set slots_available=slots_available-1 where slot_timing=?";
+                                PreparedStatement stmt_update = connection.prepareStatement(change);
+
+                                stmt_update.setString(1, aptime);
+
+                                stmt_update.executeUpdate();
+
+                                JOptionPane.showMessageDialog(null, "Appointment booked Successfully");
+                                new menu(f, user_user_name);
+                            }
+
+                            else if (data_check == 0) {
+                                JOptionPane.showMessageDialog(null, "Sorry!! Slot not Available");
+                            }
+                        }
+
+                        connection.close();
+
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, ex);
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "only numbers are allowed for mobile number");
+                    }
+
+                } else if (!data) {
+                    JOptionPane.showMessageDialog(null, "Only Characters are allowed for First Name");
+                } else if (!data1) {
+                    JOptionPane.showMessageDialog(null, "Only Characters are allowed for Last Name");
+                } else if (!data2) {
+                    JOptionPane.showMessageDialog(null, "Only numbers are allowed for age");
+                } else if (!data3) {
+                    JOptionPane.showMessageDialog(null, "Only numbers are allowed for Mobile Number");
+                } else if (contact.length() != 10) {
+                    JOptionPane.showMessageDialog(null, "Invalid Mobile Number");
+                } else if (aptime.equals("Your Time Slot will be displayed here")) {
+                    JOptionPane.showMessageDialog(null, "You need to Select a Time slot before booking ");
+                } else if ((!male.isSelected()) || (!female.isSelected()) || (!other.isSelected())) {
+                    JOptionPane.showMessageDialog(null, "Gender is required ");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "All inputs are required");
+            }
+        }
+
+        if (e.getSource() == b19)
+
+        {
+            new slot_booking(f, user_user_name);
+        }
+
+        if (e.getSource() == male) {
+            if (male.isSelected()) {
+                female.setEnabled(false);
+                other.setEnabled(false);
+            } else if ((!male.isSelected())) {
+                female.setEnabled(true);
+                other.setEnabled(true);
+            }
+
+        }
+
+        if (e.getSource() == female) {
+            if (female.isSelected()) {
+                male.setEnabled(false);
+                other.setEnabled(false);
+            } else if ((!female.isSelected())) {
+                male.setEnabled(true);
+                other.setEnabled(true);
+            }
+
+        }
+
+        if (e.getSource() == other) {
+            if (other.isSelected()) {
+                female.setEnabled(false);
+                male.setEnabled(false);
+            } else if ((!male.isSelected())) {
+                female.setEnabled(true);
+                male.setEnabled(true);
+            }
 
         }
     }
-    
+
 }

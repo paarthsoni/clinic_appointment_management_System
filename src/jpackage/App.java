@@ -15,6 +15,7 @@ import jpackage.*;
 interface login_user {
 
     static JFrame f = new JFrame("Clinic appointment Management System");
+
 }
 
 // Aayush - Create account class - start
@@ -165,6 +166,7 @@ class create_account extends JFrame implements ActionListener {
             String l_name = t2.getText();
             String mobile_no = t3.getText();
             String user_name = t4.getText();
+
             String user_password = t5.getText();
             String confirm_password = t6.getText();
             String jdbcURL = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d1itre8d1ofteb";
@@ -256,16 +258,19 @@ class login extends JFrame implements login_user, ActionListener {
     JTextField t1;
     JPasswordField t2;
     JCheckBox showpassword;
+    String user_username;
 
     public login() {
 
         f.getContentPane().removeAll();
         f.repaint();
 
-        JLabel background = new JLabel(new ImageIcon(
-                "E:\\Clinic_appointment_management_system\\clinic_appointment_management_System\\src\\jpackage\\image.jpg"));
+        // JLabel background = new JLabel(new ImageIcon(
+        // "E:\\Clinic_appointment_management_system\\clinic_appointment_management_System\\src\\jpackage\\image.jpg"));
 
-        f.add(background);
+        JLabel background = new JLabel(new ImageIcon(
+                "D:\\SY Btech IT\\Java Programming\\java mini project\\mini project-java\\src\\jpackage\\image.jpg"));
+
         f.setContentPane(background);
 
         f.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -368,8 +373,9 @@ class login extends JFrame implements login_user, ActionListener {
                 while (a.next()) {
                     String value = a.getString("case");
                     if (value.equals("TRUEUSER")) {
+                        user_username = t1.getText();
                         JOptionPane.showMessageDialog(f, "Logged in Successfully");
-                        new menu(f);
+                        new menu(f, user_username);
                     } else if (value.equals("TRUEADMIN")) {
                         JOptionPane.showMessageDialog(f, "Logged in Successfully as Admin");
                     } else if (value.equals("FALSE")) {

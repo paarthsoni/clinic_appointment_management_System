@@ -3,6 +3,7 @@
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "d:\\SY Btech IT\\Java Programming\\postgresql-42.3.0.jar"
+        "d:\\SY Btech IT\\Java Programming\\postgresql-42.3.0.jar",
+        "d:\\Softwares.exe\\jdatepicker-1.3.4.jar"
     ]
 }
