@@ -1,21 +1,15 @@
 package jpackage;
 
-import java.sql.*;
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import jpackage.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 public class slot_booking extends JFrame implements ActionListener , login_user {
 

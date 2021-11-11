@@ -12,11 +12,11 @@ import java.net.URISyntaxException;
 
 import jpackage.*;
 
-public class menu extends JFrame implements ActionListener, login_user {
-    
-    JButton b1, b2, b3, b4, b5;
+public class account_settings extends JFrame implements ActionListener, login_user{
 
-    public menu(JFrame f){
+    JButton b1, b2, b3;
+
+    public account_settings(JFrame f){
         f.getContentPane().removeAll();
         f.repaint();
         f.getContentPane().setBackground(Color.green);
@@ -24,37 +24,28 @@ public class menu extends JFrame implements ActionListener, login_user {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setDefaultLookAndFeelDecorated(true);
 
-        b1 = new JButton("Book an Appointment");
-        b1.setBounds(700, 200, 250, 50);
+        b1 = new JButton("Update Account");
+        b1.setBounds(670, 250, 250, 50);
         b1.setFont(new Font("Helvetica", Font.BOLD, 17));
         b1.addActionListener(this);
         f.add(b1);
 
-        b2 = new JButton("Cancel Appointment");
-        b2.setBounds(700, 300, 250, 50);
+        b2 = new JButton("Delete Account");
+        b2.setBounds(670, 350, 250, 50);
         b2.setFont(new Font("Helvetica", Font.BOLD, 17));
         b2.addActionListener(this);
         f.add(b2);
 
-        b3 = new JButton("Show Appointment History");
-        b3.setBounds(700, 400, 250, 50);
+        b3 = new JButton("Go back to Menu");
+        b3.setBounds(705, 450, 180, 50);
         b3.setFont(new Font("Helvetica", Font.BOLD, 17));
         b3.addActionListener(this);
+        b3.setBackground(Color.RED);
+        b3.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(b3);
 
-        b4 = new JButton("Account Settings");
-        b4.setBounds(700, 500, 250, 50);
-        b4.setFont(new Font("Helvetica", Font.BOLD, 17));
-        b4.addActionListener(this);
-        f.add(b4);
+        
 
-        b5 = new JButton("Log Out");
-        b5.setBounds(1330, 30, 150, 35);
-        b5.setFont(new Font("Helvetica", Font.BOLD, 17));
-        b5.addActionListener(this);
-        b5.setBackground(Color.RED);
-        b5.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
-        f.add(b5);
     }
 
     @Override
@@ -63,19 +54,19 @@ public class menu extends JFrame implements ActionListener, login_user {
 
         if (e.getSource() == b1) {
 
-            new slot_booking(f);
+            new update_account(f);
 
         }
 
-        if (e.getSource() == b4) {
+        if (e.getSource() == b2) {
 
-            new account_settings(f);
+            new delete_account(f);
 
         }
         
-        if (e.getSource() == b5) {
+        if (e.getSource() == b3) {
 
-            new login();
+            new menu(f);
 
         }
         
