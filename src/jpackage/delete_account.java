@@ -19,8 +19,10 @@ public class delete_account extends JFrame implements ActionListener, login_user
     JTextField t1;
     JPasswordField t2;
     JCheckBox showpassword;
+    String user_user_name;
 
-    public delete_account(JFrame f){
+    public delete_account(JFrame f, String user_username) {
+        user_user_name = user_username;
         f.getContentPane().removeAll();
         f.repaint();
         f.getContentPane().setBackground(Color.green);
@@ -89,13 +91,13 @@ public class delete_account extends JFrame implements ActionListener, login_user
 
         if (e.getSource() == b1) {
 
-            new menu(f);
+            new menu(f, user_user_name);
 
         }
 
         if (e.getSource() == b2) {
 
-            new account_settings(f);
+            new account_settings(f, user_user_name);
 
         }
 
@@ -106,7 +108,7 @@ public class delete_account extends JFrame implements ActionListener, login_user
                 t2.setEchoChar('\u2022');
             }
         }
-        
+
     }
-    
+
 }

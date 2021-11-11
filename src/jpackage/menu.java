@@ -72,7 +72,7 @@ public class menu extends JFrame implements ActionListener, login_user {
 
         if (e.getSource() == b4) {
 
-            new account_settings(f);
+            new account_settings(f, user_user_name);
 
         }
 

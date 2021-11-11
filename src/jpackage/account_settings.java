@@ -12,11 +12,13 @@ import java.net.URISyntaxException;
 
 import jpackage.*;
 
-public class account_settings extends JFrame implements ActionListener, login_user,{
+public class account_settings extends JFrame implements ActionListener, login_user {
 
     JButton b1, b2, b3;
+    String user_user_name;
 
-    public account_settings(JFrame f){
+    public account_settings(JFrame f, String user_username) {
+        user_user_name = user_username;
         f.getContentPane().removeAll();
         f.repaint();
         f.getContentPane().setBackground(Color.green);
@@ -44,8 +46,6 @@ public class account_settings extends JFrame implements ActionListener, login_us
         b3.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(b3);
 
-        
-
     }
 
     @Override
@@ -54,21 +54,21 @@ public class account_settings extends JFrame implements ActionListener, login_us
 
         if (e.getSource() == b1) {
 
-            new update_account(f);
+            new update_account(f, user_user_name);
 
         }
 
         if (e.getSource() == b2) {
 
-            new delete_account(f);
+            new delete_account(f, user_user_name);
 
         }
-        
+
         if (e.getSource() == b3) {
 
-            new menu(f,user_);
+            new menu(f, user_user_name);
 
         }
-        
+
     }
 }

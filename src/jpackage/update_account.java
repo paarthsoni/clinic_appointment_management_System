@@ -15,8 +15,10 @@ import jpackage.*;
 public class update_account extends JFrame implements ActionListener, login_user {
 
     JButton b1, b2, b3, b4;
+    String user_user_name;
 
-    public update_account(JFrame f){
+    public update_account(JFrame f, String user_username) {
+        user_user_name = user_username;
         f.getContentPane().removeAll();
         f.repaint();
         f.getContentPane().setBackground(Color.green);
@@ -55,42 +57,44 @@ public class update_account extends JFrame implements ActionListener, login_user
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
-        
+
         if (e.getSource() == b1) {
 
-            new update_username(f);
+            new update_username(f, user_user_name);
 
         }
 
         if (e.getSource() == b2) {
 
-            new update_password(f);
+            new update_password(f, user_user_name);
 
         }
 
         if (e.getSource() == b3) {
 
-            new update_number(f);
+            new update_number(f, user_user_name);
 
         }
 
         if (e.getSource() == b4) {
 
-            new account_settings(f);
+            new account_settings(f, user_user_name);
 
         }
     }
 }
 
-class update_username extends JFrame implements ActionListener, login_user{
-    
+class update_username extends JFrame implements ActionListener, login_user {
+
     JLabel l, l1, l2, l3, l4;
     JButton b1, b2;
     JTextField t1, t2;
     JPasswordField t3;
     JCheckBox showpassword;
+    String user_user_name;
 
-    public update_username(JFrame f){
+    public update_username(JFrame f, String user_username) {
+        user_user_name = user_username;
         f.getContentPane().removeAll();
         f.repaint();
         f.getContentPane().setBackground(Color.green);
@@ -171,13 +175,13 @@ class update_username extends JFrame implements ActionListener, login_user{
 
         if (e.getSource() == b1) {
 
-            new menu(f);
+            new menu(f, user_user_name);
 
         }
 
         if (e.getSource() == b2) {
 
-            new update_account(f);
+            new update_account(f, user_user_name);
 
         }
 
@@ -188,19 +192,21 @@ class update_username extends JFrame implements ActionListener, login_user{
                 t3.setEchoChar('\u2022');
             }
         }
-        
+
     }
 }
 
-class update_password extends JFrame implements ActionListener, login_user{
-    
+class update_password extends JFrame implements ActionListener, login_user {
+
     JLabel l, l1, l2, l3, l4;
     JButton b1, b2;
     JTextField t1;
     JPasswordField t2, t3;
     JCheckBox showpassword, showpassword1;
+    String user_user_name;
 
-    public update_password(JFrame f){
+    public update_password(JFrame f, String user_username) {
+        user_user_name = user_username;
         f.getContentPane().removeAll();
         f.repaint();
         f.getContentPane().setBackground(Color.green);
@@ -289,13 +295,13 @@ class update_password extends JFrame implements ActionListener, login_user{
 
         if (e.getSource() == b1) {
 
-            new menu(f);
+            new menu(f, user_user_name);
 
         }
 
         if (e.getSource() == b2) {
 
-            new update_account(f);
+            new update_account(f, user_user_name);
 
         }
 
@@ -314,19 +320,21 @@ class update_password extends JFrame implements ActionListener, login_user{
                 t3.setEchoChar('\u2022');
             }
         }
-        
+
     }
 }
 
-class update_number extends JFrame implements ActionListener, login_user{
+class update_number extends JFrame implements ActionListener, login_user {
 
     JLabel l, l1, l2, l3, l4;
     JButton b1, b2;
     JTextField t1, t3;
     JPasswordField t2;
     JCheckBox showpassword;
-    
-    public update_number(JFrame f){
+    String user_user_name;
+
+    public update_number(JFrame f, String user_username) {
+        user_user_name = user_username;
         f.getContentPane().removeAll();
         f.repaint();
         f.getContentPane().setBackground(Color.green);
@@ -407,13 +415,13 @@ class update_number extends JFrame implements ActionListener, login_user{
 
         if (e.getSource() == b1) {
 
-            new menu(f);
+            new menu(f, user_user_name);
 
         }
 
         if (e.getSource() == b2) {
 
-            new update_account(f);
+            new update_account(f, user_user_name);
 
         }
 
@@ -424,6 +432,6 @@ class update_number extends JFrame implements ActionListener, login_user{
                 t2.setEchoChar('\u2022');
             }
         }
-        
+
     }
 }
