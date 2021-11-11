@@ -70,6 +70,12 @@ public class menu extends JFrame implements ActionListener, login_user {
 
         }
 
+        if (e.getSource() == b4) {
+
+            new account_settings(f);
+
+        }
+
         if (e.getSource() == b5) {
 
             JOptionPane.showMessageDialog(null, "Logged out Successfully");
