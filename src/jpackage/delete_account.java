@@ -76,8 +76,8 @@ public class delete_account extends JFrame implements ActionListener, login_user
         b1.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(b1);
 
-        b2 = new JButton("Go back to Menu");
-        b2.setBounds(680, 530, 180, 50);
+        b2 = new JButton("Go back to account Settings");
+        b2.setBounds(640, 530, 270, 50);
         b2.setFont(new Font("Helvetica", Font.BOLD, 17));
         b2.addActionListener(this);
         b2.setBackground(Color.RED);
@@ -90,8 +90,47 @@ public class delete_account extends JFrame implements ActionListener, login_user
         // TODO Auto-generated method stub
 
         if (e.getSource() == b1) {
+            String delete_username = t1.getText();
+            String delete_password = t2.getText();
+            String jdbcURL = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d1itre8d1ofteb";
+            String username_db = "tklsjaddlzcmwj";
+            String password_db = "0a962d95cc35d5a21dc4081cf4bca8abe21fa22727cee6e31b746df3cb4ffd47";
 
-            new menu(f, user_user_name);
+            try {
+                Connection connection = DriverManager.getConnection(jdbcURL, username_db, password_db);
+
+                String delete_check = "SELECT CASE WHEN EXISTS ( SELECT * FROM user_account WHERE username=? and user_password=crypt(?,user_password)) THEN 'TRUEUSER' ELSE 'FALSE' END";
+
+                PreparedStatement statement_delete = connection.prepareStatement(delete_check);
+
+                statement_delete.setString(1, delete_username);
+                statement_delete.setString(2, delete_password);
+
+                ResultSet delete_data = statement_delete.executeQuery();
+
+                while (delete_data.next()) {
+                    String value = delete_data.getString("case");
+                    if (value.equals("TRUEUSER")) {
+                        String delete_acc = "delete from user_account where username=?";
+                        String delete_acc_his = "delete from appointment_history where user_username=?";
+                        PreparedStatement statement_delete_acc = connection.prepareStatement(delete_acc);
+                        PreparedStatement statement_delete_acc_his = connection.prepareStatement(delete_acc_his);
+                        statement_delete_acc.setString(1, delete_username);
+                        statement_delete_acc_his.setString(1, delete_username);
+
+                        statement_delete_acc.executeUpdate();
+                        statement_delete_acc_his.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Account Deleted Successfully");
+                        new login();
+
+                    } else if (value.equals("FALSE")) {
+                        JOptionPane.showMessageDialog(null, "No Such User Present ");
+                    }
+                }
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Server Error ");
+            }
 
         }
 

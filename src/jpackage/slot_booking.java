@@ -309,13 +309,12 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
             }
 
             String id = TimeZone.getDefault().getID();
-            System.out.println(id);
+
             ZoneId zoneId = ZoneId.of(id);
             ZonedDateTime now = ZonedDateTime.now(zoneId);
             ZonedDateTime startOfDay = now.toLocalDate().atStartOfDay(zoneId);
             Duration duration = Duration.between(startOfDay, now);
             long minutesIntoTheDay = duration.toMinutes();
-            System.out.println(minutesIntoTheDay);
 
             Date date1 = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("HH");
@@ -346,7 +345,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 }
 
             }
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='9:00 - 9:30'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -408,7 +407,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='9:30 - 10:00'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -469,7 +468,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 }
 
             }
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='10:00 - 10:30'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -531,7 +530,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='10:30 - 11:00'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -592,7 +591,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 }
 
             }
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='11:00 - 11:30'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -652,7 +651,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     b6.setEnabled(false);
                 }
             }
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='11:30 - 12:00'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -712,7 +711,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
                 }
 
-                if (hours == 0) {
+                if (hours == 8 && minutesIntoTheDay == 480) {
                     String enable1 = "update slots set slots_available=3 where slot_timing='12:00 - 12:30'";
                     Statement e_stmt1 = connection.createStatement();
 
@@ -776,7 +775,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='12:30 - 1:00'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -837,7 +836,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 }
 
             }
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='5:00 - 5:30'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -898,7 +897,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 }
 
             }
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='5:30 - 6:00'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -959,7 +958,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 d_stmt1.executeUpdate(disable1);
 
             }
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='6:00 - 6:30'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -1020,7 +1019,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 }
 
             }
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='6:30 - 7:00'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -1081,7 +1080,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 }
 
             }
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='7:00 - 7:30'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -1142,7 +1141,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 }
 
             }
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='7:30 - 8:00'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -1204,7 +1203,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 }
 
             }
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='8:00 - 8:30'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -1265,7 +1264,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 }
 
             }
-            if (hours == 0) {
+            if (hours == 8 && minutesIntoTheDay == 480) {
                 String enable1 = "update slots set slots_available=3 where slot_timing='8:30 - 9:00'";
                 Statement e_stmt1 = connection.createStatement();
 
@@ -1308,52 +1307,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
         b18.setBackground(Color.GREEN);
         b18.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(b18);
-
-        // System.out.println("Time in 24 Hour format - " + hours);
-        // System.out.println("Time in 24 Hour format - " + mins);
-
-        // int time = java.time.LocalTime.now().getHour();
-        // int min = java.time.LocalTime.now().getMinute();
-        // if (hours >= 9 && mins >= 31 && hours <= 23 && mins <= 59) {
-        // b1.setEnabled(false);
-        // b1.setBackground(Color.red);
-        // }
-        // if (hours >= 10 && mins >= 1 && hours <= 23 && mins <= 59) {
-
-        // b2.setEnabled(false);
-        // b2.setBackground(Color.red);
-        // }
-        // if (hours >= 10 && mins >= 31 && hours <= 23 && mins <= 59) {
-
-        // b3.setEnabled(false);
-        // b3.setBackground(Color.red);
-        // }
-        // if (hours >= 11 && mins >= 1 && hours <= 23 && mins <= 59) {
-
-        // b4.setEnabled(false);
-        // b4.setBackground(Color.red);
-        // }
-        // if (hours >= 11 && mins >= 31 && hours <= 23 && mins <= 59) {
-
-        // b5.setEnabled(false);
-        // b5.setBackground(Color.red);
-
-        // }
-        // if (hours >= 12 && mins >= 1 && hours <= 23 && mins <= 59) {
-
-        // b6.setEnabled(false);
-        // b6.setBackground(Color.red);
-        // }
-        // if (hours >= 12 && mins >= 31 && hours <= 23 && mins <= 59) {
-
-        // b7.setEnabled(false);
-        // b7.setBackground(Color.red);
-        // }
-        // if (hours >= 13 && mins >= 1 && hours <= 23 && mins <= 59) {
-
-        // b8.setEnabled(false);
-        // b8.setBackground(Color.red);
-        // }
 
     }
 
@@ -1528,7 +1481,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
                                 String change = "update slots set slots_available=slots_available-1 where slot_timing=?";
                                 PreparedStatement stmt_update = connection.prepareStatement(change);
-
+                                System.out.println(aptime);
                                 stmt_update.setString(1, aptime);
 
                                 stmt_update.executeUpdate();

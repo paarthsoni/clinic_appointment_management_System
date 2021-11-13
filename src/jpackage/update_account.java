@@ -160,8 +160,8 @@ class update_username extends JFrame implements ActionListener, login_user {
         b1.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(b1);
 
-        b2 = new JButton("Go back to Menu");
-        b2.setBounds(680, 630, 180, 50);
+        b2 = new JButton("Go back to Account Settings");
+        b2.setBounds(640, 630, 270, 50);
         b2.setFont(new Font("Helvetica", Font.BOLD, 17));
         b2.addActionListener(this);
         b2.setBackground(Color.RED);
@@ -175,13 +175,63 @@ class update_username extends JFrame implements ActionListener, login_user {
 
         if (e.getSource() == b1) {
 
-            new menu(f, user_user_name);
+            String old_username = t1.getText();
+            String new_username = t2.getText();
+            String user_password = t3.getText();
 
+            String jdbcURL = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d1itre8d1ofteb";
+            String username_db = "tklsjaddlzcmwj";
+            String password_db = "0a962d95cc35d5a21dc4081cf4bca8abe21fa22727cee6e31b746df3cb4ffd47";
+            try {
+                Connection connection = DriverManager.getConnection(jdbcURL, username_db, password_db);
+
+                String username_check = "SELECT CASE WHEN EXISTS ( SELECT * FROM user_account WHERE username=? and user_password=crypt(?,user_password)) THEN 'TRUEUSER' ELSE 'FALSE' END";
+
+                PreparedStatement statement_check_username = connection.prepareStatement(username_check);
+
+                statement_check_username.setString(1, old_username);
+                statement_check_username.setString(2, user_password);
+
+                ResultSet check = statement_check_username.executeQuery();
+
+                while (check.next()) {
+                    String value = check.getString("case");
+                    if (value.equals("TRUEUSER")) {
+                        String update_username = "update user_account set username=? where username=?";
+                        String update_username_his = "update appointment_history set user_username=? where user_username=?";
+
+                        PreparedStatement statement_update_username = connection.prepareStatement(update_username);
+                        PreparedStatement statement_update_username_his = connection
+                                .prepareStatement(update_username_his);
+
+                        statement_update_username.setString(1, new_username);
+                        statement_update_username.setString(2, old_username);
+
+                        statement_update_username_his.setString(1, new_username);
+                        statement_update_username_his.setString(2, old_username);
+
+                        statement_update_username.executeUpdate();
+                        statement_update_username_his.executeUpdate();
+
+                        JOptionPane.showMessageDialog(null, "Username Updated Successfully");
+                        new menu(f, user_user_name);
+
+                    }
+
+                    else {
+                        JOptionPane.showMessageDialog(null, "No Such User Present");
+
+                    }
+                }
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Server Error");
+            }
         }
 
         if (e.getSource() == b2) {
 
-            new update_account(f, user_user_name);
+            new account_settings(f, user_user_name);
 
         }
 
@@ -280,8 +330,8 @@ class update_password extends JFrame implements ActionListener, login_user {
         b1.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(b1);
 
-        b2 = new JButton("Go back to Menu");
-        b2.setBounds(680, 630, 180, 50);
+        b2 = new JButton("Go back to Account Settings");
+        b2.setBounds(640, 630, 270, 50);
         b2.setFont(new Font("Helvetica", Font.BOLD, 17));
         b2.addActionListener(this);
         b2.setBackground(Color.RED);
@@ -291,17 +341,61 @@ class update_password extends JFrame implements ActionListener, login_user {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
 
         if (e.getSource() == b1) {
 
-            new menu(f, user_user_name);
+            String username = t1.getText();
+            String old_password = t2.getText();
+            String new_password = t3.getText();
 
+            String jdbcURL = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d1itre8d1ofteb";
+            String username_db = "tklsjaddlzcmwj";
+            String password_db = "0a962d95cc35d5a21dc4081cf4bca8abe21fa22727cee6e31b746df3cb4ffd47";
+            try {
+                Connection connection = DriverManager.getConnection(jdbcURL, username_db, password_db);
+
+                String username_check = "SELECT CASE WHEN EXISTS ( SELECT * FROM user_account WHERE username=? and user_password=crypt(?,user_password)) THEN 'TRUEUSER' ELSE 'FALSE' END";
+
+                PreparedStatement statement_check_username = connection.prepareStatement(username_check);
+
+                statement_check_username.setString(1, username);
+                statement_check_username.setString(2, old_password);
+
+                ResultSet check = statement_check_username.executeQuery();
+
+                while (check.next()) {
+                    String value = check.getString("case");
+                    if (value.equals("TRUEUSER")) {
+                        String update_username = "update user_account set user_password=crypt(?,user_password) where username=?";
+
+                        PreparedStatement statement_update_username = connection.prepareStatement(update_username);
+
+                        statement_update_username.setString(1, new_password);
+                        statement_update_username.setString(2, username);
+
+                        statement_update_username.executeUpdate();
+
+                        JOptionPane.showMessageDialog(null, "Password Updated Successfully");
+                        new menu(f, user_user_name);
+
+                    }
+
+                    else {
+                        JOptionPane.showMessageDialog(null, "No Such User Present");
+
+                    }
+                }
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Server Error");
+            }
         }
 
-        if (e.getSource() == b2) {
+        if (e.getSource() == b2)
 
-            new update_account(f, user_user_name);
+        {
+
+            new account_settings(f, user_user_name);
 
         }
 
@@ -400,8 +494,8 @@ class update_number extends JFrame implements ActionListener, login_user {
         b1.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         f.add(b1);
 
-        b2 = new JButton("Go back to Menu");
-        b2.setBounds(680, 630, 180, 50);
+        b2 = new JButton("Go back to Account Settings");
+        b2.setBounds(640, 630, 270, 50);
         b2.setFont(new Font("Helvetica", Font.BOLD, 17));
         b2.addActionListener(this);
         b2.setBackground(Color.RED);
@@ -415,13 +509,65 @@ class update_number extends JFrame implements ActionListener, login_user {
 
         if (e.getSource() == b1) {
 
-            new menu(f, user_user_name);
+            String username = t1.getText();
+            String password = t2.getText();
+            String new_contact = t3.getText();
 
+            String jdbcURL = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d1itre8d1ofteb";
+            String username_db = "tklsjaddlzcmwj";
+            String password_db = "0a962d95cc35d5a21dc4081cf4bca8abe21fa22727cee6e31b746df3cb4ffd47";
+            try {
+                Connection connection = DriverManager.getConnection(jdbcURL, username_db, password_db);
+
+                if (new_contact.length() == 10) {
+
+                    String username_check = "SELECT CASE WHEN EXISTS ( SELECT * FROM user_account WHERE username=? and user_password=crypt(?,user_password)) THEN 'TRUEUSER' ELSE 'FALSE' END";
+
+                    PreparedStatement statement_check_username = connection.prepareStatement(username_check);
+
+                    statement_check_username.setString(1, username);
+                    statement_check_username.setString(2, password);
+
+                    ResultSet check = statement_check_username.executeQuery();
+
+                    while (check.next()) {
+                        String value = check.getString("case");
+                        if (value.equals("TRUEUSER")) {
+                            String update_contact = "update user_account set mobile_no=? where username=?";
+
+                            PreparedStatement statement_update_username = connection.prepareStatement(update_contact);
+
+                            statement_update_username.setString(1, new_contact);
+                            statement_update_username.setString(2, username);
+
+                            statement_update_username.executeUpdate();
+
+                            JOptionPane.showMessageDialog(null, "Mobile Number Updated Successfully");
+                            new menu(f, user_user_name);
+
+                        }
+
+                        else {
+                            JOptionPane.showMessageDialog(null, "No Such User Present");
+
+                        }
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid Mobile Number");
+                }
+            }
+
+            catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
         }
 
-        if (e.getSource() == b2) {
+        if (e.getSource() == b2)
 
-            new update_account(f, user_user_name);
+        {
+
+            new account_settings(f, user_user_name);
 
         }
 
