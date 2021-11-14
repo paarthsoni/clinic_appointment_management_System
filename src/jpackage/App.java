@@ -378,6 +378,7 @@ class login extends JFrame implements login_user, ActionListener {
                         new menu(f, user_username);
                     } else if (value.equals("TRUEADMIN")) {
                         JOptionPane.showMessageDialog(f, "Logged in Successfully as Admin");
+
                     } else if (value.equals("FALSE")) {
                         JOptionPane.showMessageDialog(f, "Please Enter a Valid Username or Password");
                     }

@@ -322,9 +322,10 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
             SimpleDateFormat sdf1 = new SimpleDateFormat("mm");
             String min = sdf1.format(date1);
             int hours = Integer.parseInt(hour);
+
             int mins = Integer.parseInt(min);
 
-            if (hours >= 9 && minutesIntoTheDay >= 571 && hours <= 23 && mins <= 59) {
+            if (hours >= 9 && minutesIntoTheDay >= 571) {
                 String disable1 = "update slots set slots_available=0 where slot_timing='9:00 - 9:30'";
                 Statement d_stmt1 = connection.createStatement();
 
@@ -338,29 +339,9 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 while (a1.next()) {
                     int value = a1.getInt("slots_available");
                     b1.setBackground(Color.red);
-                    b1.setText("9:00 - 9:30" + "   " + "(" + value + ")");
+                    b1.setText("9:00 - 9:30" + " " + "(" + value + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b1.setEnabled(false);
-
-                }
-
-            }
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='9:00 - 9:30'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='9:00 - 9:30' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b1.setBackground(Color.green);
-                    b1.setText("9:00 - 9:30" + "   " + "(" + value + ")");
-                    b1.setEnabled(true);
 
                 }
 
@@ -386,7 +367,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 10 && minutesIntoTheDay >= 601 && hours <= 23 && mins <= 59) {
+            if (hours >= 10 && minutesIntoTheDay >= 601) {
                 String disable2 = "update slots set slots_available=0 where slot_timing='9:30 - 10:00'";
                 Statement d_stmt2 = connection.createStatement();
 
@@ -403,27 +384,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     b2.setText("9:30 - 10:00" + "   " + "(" + value + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b2.setEnabled(false);
-                }
-
-            }
-
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='9:30 - 10:00'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='9:30 - 10:00' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b2.setBackground(Color.green);
-                    b2.setText("9:30 - 10:00" + "   " + "(" + value + ")");
-                    b2.setEnabled(true);
-
                 }
 
             }
@@ -448,7 +408,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 10 && minutesIntoTheDay >= 631 && hours <= 23 && mins <= 59) {
+            if (hours >= 10 && minutesIntoTheDay >= 631) {
                 String disable3 = "update slots set slots_available=0 where slot_timing='10:00 - 10:30'";
                 Statement d_stmt3 = connection.createStatement();
 
@@ -465,26 +425,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     b3.setText("10:00 - 10:30" + "   " + "(" + value + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b3.setEnabled(false);
-                }
-
-            }
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='10:00 - 10:30'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='10:00 - 10:30' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b3.setBackground(Color.green);
-                    b3.setText("10:00 - 10:30" + "   " + "(" + value + ")");
-                    b3.setEnabled(true);
-
                 }
 
             }
@@ -509,7 +449,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 11 && minutesIntoTheDay >= 661 && hours <= 23 && mins <= 59) {
+            if (hours >= 11 && minutesIntoTheDay >= 661) {
                 String disable4 = "update slots set slots_available=0 where slot_timing='10:30 - 11:00'";
                 Statement d_stmt4 = connection.createStatement();
 
@@ -526,27 +466,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     b4.setText("10:30 - 11:00" + "   " + "(" + value + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b4.setEnabled(false);
-                }
-
-            }
-
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='10:30 - 11:00'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='10:30 - 11:00' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b4.setBackground(Color.green);
-                    b4.setText("10:30 - 11:00" + "   " + "(" + value + ")");
-                    b4.setEnabled(true);
-
                 }
 
             }
@@ -571,7 +490,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 11 && minutesIntoTheDay >= 691 && hours <= 23 && mins <= 59) {
+            if (hours >= 11 && minutesIntoTheDay >= 691) {
                 String disable5 = "update slots set slots_available=0 where slot_timing='11:00 - 11:30'";
                 Statement d_stmt5 = connection.createStatement();
 
@@ -588,26 +507,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     b5.setText("11:00 - 11:30" + "   " + "(" + value + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b5.setEnabled(false);
-                }
-
-            }
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='11:00 - 11:30'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='11:00 - 11:30' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b5.setBackground(Color.green);
-                    b5.setText("11:00 - 11:30" + "   " + "(" + value + ")");
-                    b5.setEnabled(true);
-
                 }
 
             }
@@ -632,7 +531,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 12 && minutesIntoTheDay >= 721 && hours <= 23 && mins <= 59) {
+            if (hours >= 12 && minutesIntoTheDay >= 721) {
                 String disable6 = "update slots set slots_available=0 where slot_timing='11:30 - 12:00'";
                 Statement d_stmt6 = connection.createStatement();
 
@@ -650,26 +549,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b6.setEnabled(false);
                 }
-            }
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='11:30 - 12:00'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='11:30 - 12:00' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b6.setBackground(Color.green);
-                    b6.setText("11:30 - 12:00" + "   " + "(" + value + ")");
-                    b6.setEnabled(true);
-
-                }
-
             }
 
             String sql6 = "select slots_available from slots where slot_timing='12:00 - 12:30' ";
@@ -690,7 +569,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     b7.setText("12:00 - 12:30" + " " + "(" + value6 + ")");
                 }
 
-                if (hours >= 12 && minutesIntoTheDay >= 751 && hours <= 23 && mins <= 59) {
+                if (hours >= 12 && minutesIntoTheDay >= 751) {
                     String disable7 = "update slots set slots_available=0 where slot_timing='12:00 - 12:30'";
                     Statement d_stmt7 = connection.createStatement();
 
@@ -707,27 +586,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                         b7.setText("12:00 - 12:30" + "   " + "(" + value + ")");
                         UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                         b7.setEnabled(false);
-                    }
-
-                }
-
-                if (hours == 8 && minutesIntoTheDay == 480) {
-                    String enable1 = "update slots set slots_available=3 where slot_timing='12:00 - 12:30'";
-                    Statement e_stmt1 = connection.createStatement();
-
-                    e_stmt1.executeUpdate(enable1);
-
-                    String sql_1 = "select slots_available from slots where slot_timing='12:00 - 12:30' ";
-                    Statement statement_1 = connection.createStatement();
-
-                    ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                    while (a1.next()) {
-                        int value = a1.getInt("slots_available");
-                        b7.setBackground(Color.green);
-                        b7.setText("12:00 - 12:30" + "   " + "(" + value + ")");
-                        b7.setEnabled(true);
-
                     }
 
                 }
@@ -754,7 +612,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 13 && minutesIntoTheDay >= 781 && hours <= 23 && mins <= 59) {
+            if (hours >= 13 && minutesIntoTheDay >= 781) {
                 String disable8 = "update slots set slots_available=0 where slot_timing='12:30 - 1:00'";
                 Statement d_stmt8 = connection.createStatement();
 
@@ -775,27 +633,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='12:30 - 1:00'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='12:30 - 1:00' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b8.setBackground(Color.green);
-                    b8.setText("12:30 - 1:00" + "   " + "(" + value + ")");
-                    b8.setEnabled(true);
-
-                }
-
-            }
-
             String sql8 = "select slots_available from slots where slot_timing='5:00 - 5:30' ";
             Statement statement9 = connection.createStatement();
 
@@ -805,9 +642,9 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 int value8 = j.getInt("slots_available");
                 if (value8 == 0) {
                     b9.setBackground(Color.red);
-                    b4.setText("5:00 - 5:30" + " " + "(" + value8 + ")");
+                    b9.setText("5:00 - 5:30" + " " + "(" + value8 + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
-                    b9.repaint();
+
                     b9.setEnabled(false);
                 } else {
                     b9.setBackground(Color.green);
@@ -816,7 +653,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 17 && minutesIntoTheDay >= 1051 && hours <= 23 && mins <= 59) {
+            if (hours >= 17 && minutesIntoTheDay >= 1051) {
                 String disable1 = "update slots set slots_available=0 where slot_timing='5:00 - 5:30'";
                 Statement d_stmt1 = connection.createStatement();
 
@@ -833,26 +670,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     b9.setText("5:00 - 5:30" + "   " + "(" + value + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b9.setEnabled(false);
-                }
-
-            }
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='5:00 - 5:30'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='5:00 - 5:30' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b9.setBackground(Color.green);
-                    b9.setText("5:00 - 5:30" + "   " + "(" + value + ")");
-                    b9.setEnabled(true);
-
                 }
 
             }
@@ -877,7 +694,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 18 && minutesIntoTheDay >= 1081 && hours <= 23 && mins <= 59) {
+            if (hours >= 18 && minutesIntoTheDay >= 1081) {
                 String disable1 = "update slots set slots_available=0 where slot_timing='5:30 - 6:00'";
                 Statement d_stmt1 = connection.createStatement();
 
@@ -894,26 +711,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     b10.setText("5:30 - 6:00" + "   " + "(" + value + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b10.setEnabled(false);
-                }
-
-            }
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='5:30 - 6:00'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='5:30 - 6:00' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b10.setBackground(Color.green);
-                    b10.setText("5:30 - 6:00" + "   " + "(" + value + ")");
-                    b10.setEnabled(true);
-
                 }
 
             }
@@ -938,7 +735,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 18 && minutesIntoTheDay >= 1111 && hours <= 23 && mins <= 59) {
+            if (hours >= 18 && minutesIntoTheDay >= 1111) {
                 String disable1 = "update slots set slots_available=0 where slot_timing='6:00 - 6:30'";
                 Statement d_stmt1 = connection.createStatement();
 
@@ -956,26 +753,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 }
 
                 d_stmt1.executeUpdate(disable1);
-
-            }
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='6:00 - 6:30'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='6:00 - 6:30' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b11.setBackground(Color.green);
-                    b11.setText("6:00 - 6:30" + "   " + "(" + value + ")");
-                    b11.setEnabled(true);
-
-                }
 
             }
 
@@ -999,7 +776,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 19 && minutesIntoTheDay >= 1141 && hours <= 23 && mins <= 59) {
+            if (hours >= 19 && minutesIntoTheDay >= 1141) {
                 String disable1 = "update slots set slots_available=0 where slot_timing='6:30 - 7:00'";
                 Statement d_stmt1 = connection.createStatement();
 
@@ -1016,26 +793,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     b12.setText("6:30 - 7:00" + "   " + "(" + value + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b12.setEnabled(false);
-                }
-
-            }
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='6:30 - 7:00'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='6:30 - 7:00' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b12.setBackground(Color.green);
-                    b12.setText("6:30 - 7:00" + "   " + "(" + value + ")");
-                    b12.setEnabled(true);
-
                 }
 
             }
@@ -1060,7 +817,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 19 && minutesIntoTheDay >= 1171 && hours <= 23 && mins <= 59) {
+            if (hours >= 19 && minutesIntoTheDay >= 1171) {
                 String disable1 = "update slots set slots_available=0 where slot_timing='7:00 - 7:30'";
                 Statement d_stmt1 = connection.createStatement();
 
@@ -1080,26 +837,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 }
 
             }
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='7:00 - 7:30'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='7:00 - 7:30' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b13.setBackground(Color.green);
-                    b13.setText("7:00 - 7:30" + "   " + "(" + value + ")");
-                    b13.setEnabled(true);
-
-                }
-
-            }
 
             String sql13 = "select slots_available from slots where slot_timing='7:30 - 8:00' ";
             Statement statement14 = connection.createStatement();
@@ -1110,10 +847,10 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                 int value13 = o.getInt("slots_available");
                 if (value13 == 0) {
                     b14.setBackground(Color.red);
-                    b4.setText("7:30 - 8:00" + " " + "(" + value13 + ")");
+                    b14.setText("7:30 - 8:00" + " " + "(" + value13 + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b14.repaint();
-                    b4.setEnabled(false);
+                    b14.setEnabled(false);
                 } else {
                     b14.setBackground(Color.green);
                     b14.setText("7:30 - 8:00" + " " + "(" + value13 + ")");
@@ -1121,7 +858,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 20 && minutesIntoTheDay >= 1201 && hours <= 23 && mins <= 59) {
+            if (hours >= 20 && minutesIntoTheDay >= 1201) {
                 String disable1 = "update slots set slots_available=0 where slot_timing='7:30 - 8:00'";
                 Statement d_stmt1 = connection.createStatement();
 
@@ -1138,26 +875,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     b14.setText("7:30 - 8:00" + "   " + "(" + value + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b14.setEnabled(false);
-                }
-
-            }
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='7:30 - 8:00'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='7:30 - 8:00' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b14.setBackground(Color.green);
-                    b14.setText("7:30 - 8:00" + "   " + "(" + value + ")");
-                    b14.setEnabled(true);
-
                 }
 
             }
@@ -1182,7 +899,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 20 && minutesIntoTheDay >= 1231 && hours <= 23 && mins <= 59) {
+            if (hours >= 20 && minutesIntoTheDay >= 1231) {
                 String disable1 = "update slots set slots_available=0 where slot_timing='8:00 - 8:30'";
                 Statement d_stmt1 = connection.createStatement();
 
@@ -1199,26 +916,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     b15.setText("8:00 - 8:30" + "   " + "(" + value + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b15.setEnabled(false);
-
-                }
-
-            }
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='8:00 - 8:30'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='8:00 - 8:30' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b15.setBackground(Color.green);
-                    b15.setText("8:00 - 8:30" + "   " + "(" + value + ")");
-                    b15.setEnabled(true);
 
                 }
 
@@ -1244,7 +941,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
             }
 
-            if (hours >= 21 && minutesIntoTheDay >= 1261 && hours <= 23 && mins <= 59) {
+            if (hours >= 21 && minutesIntoTheDay >= 1261) {
                 String disable1 = "update slots set slots_available=0 where slot_timing='8:30 - 9:00'";
                 Statement d_stmt1 = connection.createStatement();
 
@@ -1261,26 +958,6 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                     b16.setText("8:30 - 9:00" + "   " + "(" + value + ")");
                     UIManager.put("Button.disabledText", new ColorUIResource(Color.black));
                     b16.setEnabled(false);
-                }
-
-            }
-            if (hours == 8 && minutesIntoTheDay == 480) {
-                String enable1 = "update slots set slots_available=3 where slot_timing='8:30 - 9:00'";
-                Statement e_stmt1 = connection.createStatement();
-
-                e_stmt1.executeUpdate(enable1);
-
-                String sql_1 = "select slots_available from slots where slot_timing='8:30 - 9:00' ";
-                Statement statement_1 = connection.createStatement();
-
-                ResultSet a1 = statement_1.executeQuery(sql_1);
-
-                while (a1.next()) {
-                    int value = a1.getInt("slots_available");
-                    b16.setBackground(Color.green);
-                    b16.setText("8:30 - 9:00" + "   " + "(" + value + ")");
-                    b16.setEnabled(true);
-
                 }
 
             }
@@ -1450,7 +1127,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                             int data_check = slot_check.getInt("slots_available");
 
                             if (data_check != 0) {
-                                String sql_book = "insert into appointments(p_fname,p_lname,age_of_patient,gender,date_of_appointment,time_of_appointment,contact_num,patient_problem) values(?,?,?,?,?,?,?,?)";
+                                String sql_book = "insert into appointments(p_fname,p_lname,age_of_patient,gender,date_of_appointment,time_of_appointment,contact_num,patient_problem,user_username) values(?,?,?,?,?,?,?,?,?)";
 
                                 String app_history = "insert into appointment_history(p_fname,p_lname,age,gender,appointment_date,appointment_time,contact_num,patient_problem,user_username) values(?,?,?,?,?,?,?,?,?)";
                                 PreparedStatement stmt_book = connection.prepareStatement(sql_book);
@@ -1463,6 +1140,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                                 stmt_book.setString(6, aptime);
                                 stmt_book.setString(7, contact);
                                 stmt_book.setString(8, patient_problem);
+                                stmt_book.setString(9, user_user_name);
 
                                 stmt_book.executeUpdate();
 
@@ -1481,7 +1159,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
 
                                 String change = "update slots set slots_available=slots_available-1 where slot_timing=?";
                                 PreparedStatement stmt_update = connection.prepareStatement(change);
-                                System.out.println(aptime);
+
                                 stmt_update.setString(1, aptime);
 
                                 stmt_update.executeUpdate();
