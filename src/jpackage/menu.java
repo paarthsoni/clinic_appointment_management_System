@@ -62,7 +62,6 @@ public class menu extends JFrame implements ActionListener, login_user {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
 
         if (e.getSource() == b1) {
 
@@ -73,7 +72,10 @@ public class menu extends JFrame implements ActionListener, login_user {
         if (e.getSource() == b3) {
 
             new appointment_history(f, user_user_name);
+        }
 
+        if (e.getSource() == b2) {
+            new cancel_appointment(f, user_user_name);
         }
 
         if (e.getSource() == b4) {
