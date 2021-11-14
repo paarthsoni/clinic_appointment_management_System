@@ -265,11 +265,11 @@ class login extends JFrame implements login_user, ActionListener {
         f.getContentPane().removeAll();
         f.repaint();
 
-        // JLabel background = new JLabel(new ImageIcon(
-        // "E:\\Clinic_appointment_management_system\\clinic_appointment_management_System\\src\\jpackage\\image.jpg"));
-
         JLabel background = new JLabel(new ImageIcon(
-                "D:\\SY Btech IT\\Java Programming\\java mini project\\mini project-java\\src\\jpackage\\image.jpg"));
+        "E:\\Clinic_appointment_management_system\\clinic_appointment_management_System\\src\\jpackage\\image.jpg"));
+
+        // JLabel background = new JLabel(new ImageIcon(
+        //         "D:\\SY Btech IT\\Java Programming\\java mini project\\mini project-java\\src\\jpackage\\image.jpg"));
 
         f.setContentPane(background);
 
@@ -378,6 +378,7 @@ class login extends JFrame implements login_user, ActionListener {
                         new menu(f, user_username);
                     } else if (value.equals("TRUEADMIN")) {
                         JOptionPane.showMessageDialog(f, "Logged in Successfully as Admin");
+                        new admin_menu(f, user_username);
                     } else if (value.equals("FALSE")) {
                         JOptionPane.showMessageDialog(f, "Please Enter a Valid Username or Password");
                     }
