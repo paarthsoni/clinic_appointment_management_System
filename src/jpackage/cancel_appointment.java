@@ -121,23 +121,50 @@ public class cancel_appointment extends JFrame implements ActionListener, login_
                 while (datecheck.next()) {
                     String value = datecheck.getString("case");
                     if (value.equals("TRUE")) {
-                        String cancel1 = "delete from appointments where user_username=? and p_fname=? and p_lname=?";
-                        String cancel2 = "delete from appointment_history where user_username=? and p_fname=? and p_lname=?";
-                        PreparedStatement select = connection.prepareStatement(cancel1);
-                        PreparedStatement select1 = connection.prepareStatement(cancel2);
 
-                        select.setString(1, user_username);
-                        select.setString(2, p_fname);
-                        select.setString(3, p_lname);
+                        String cancel_check = "select user_username, p_fname,p_lname , date_of_appointment, time_of_appointment from appointments where user_username=? and p_fname=? and p_lname=?";
+                        PreparedStatement select_cancel_check = connection.prepareStatement(cancel_check);
 
-                        select1.setString(1, user_username);
-                        select1.setString(2, p_fname);
-                        select1.setString(3, p_lname);
+                        select_cancel_check.setString(1, user_user_name);
+                        select_cancel_check.setString(2, p_fname);
+                        select_cancel_check.setString(3, p_lname);
 
-                        select.executeUpdate();
-                        select1.executeUpdate();
-                        JOptionPane.showMessageDialog(null, "Appointment cancelled Successfully");
-                        new menu(f, user_username);
+                        ResultSet cancel_app = select_cancel_check.executeQuery();
+
+                        while (cancel_app.next()) {
+                            String value_check = cancel_app.getString("date_of_appointment");
+                            String app_time = cancel_app.getString("time_of_appointment");
+
+                            if (value_check.equals(strDate)) {
+                                String cancel1 = "delete from appointments where user_username=? and p_fname=? and p_lname=?";
+                                String cancel2 = "delete from appointment_history where user_username=? and p_fname=? and p_lname=?";
+
+                                String update_slot = "update slots set slots_available=slots_available+1 where slot_timing=?";
+                                PreparedStatement select_time = connection.prepareStatement(update_slot);
+
+                                select_time.setString(1, app_time);
+
+                                select_time.executeUpdate();
+
+                                PreparedStatement select = connection.prepareStatement(cancel1);
+                                PreparedStatement select1 = connection.prepareStatement(cancel2);
+
+                                select.setString(1, user_user_name);
+                                select.setString(2, p_fname);
+                                select.setString(3, p_lname);
+
+                                select1.setString(1, user_user_name);
+                                select1.setString(2, p_fname);
+                                select1.setString(3, p_lname);
+
+                                select.executeUpdate();
+                                select1.executeUpdate();
+                                JOptionPane.showMessageDialog(null, "Appointment cancelled Successfully");
+                                new menu(f, user_username);
+                            } else if (!value_check.equals(strDate)) {
+                                JOptionPane.showMessageDialog(null, "No Such Appointment Today");
+                            }
+                        }
 
                     } else if (value.equals("FALSE")) {
                         // l1.setText("No Appointment(s) Booked Today");
@@ -150,7 +177,9 @@ public class cancel_appointment extends JFrame implements ActionListener, login_
             }
         }
 
-        if (e.getSource() == b2) {
+        if (e.getSource() == b2)
+
+        {
             new menu(f, user_user_name);
         }
 
