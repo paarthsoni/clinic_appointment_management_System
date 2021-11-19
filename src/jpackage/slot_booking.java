@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
 import java.util.TimeZone;
 import java.time.format.DateTimeFormatter;
 import java.time.Duration;
@@ -18,7 +19,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.chrono.ChronoZonedDateTime;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -1165,6 +1165,7 @@ public class slot_booking extends JFrame implements ActionListener, login_user {
                                 stmt_update.executeUpdate();
 
                                 JOptionPane.showMessageDialog(null, "Appointment booked Successfully");
+
                                 new menu(f, user_user_name);
                             }
 
