@@ -74,6 +74,7 @@ public class search_appointment extends JFrame implements ActionListener, login_
         b3 = new JButton("Go back to Menu");
         b3.setBounds(500, 540, 250, 50);
         b3.setFont(new Font("Helvetica", Font.BOLD, 17));
+        b3.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         b3.setBackground(Color.red);
         b3.addActionListener(this);
         f.add(b3);
@@ -81,6 +82,7 @@ public class search_appointment extends JFrame implements ActionListener, login_
         b2 = new JButton("Search Appointment");
         b2.setBounds(780, 540, 250, 50);
         b2.setFont(new Font("Helvetica", Font.BOLD, 17));
+        b2.setForeground(Color.BLACK.darker().darker().darker().darker().darker());
         b2.setBackground(Color.green);
         b2.addActionListener(this);
         f.add(b2);
@@ -166,7 +168,7 @@ public class search_appointment extends JFrame implements ActionListener, login_
         }
 
         if (e.getSource() == b3) {
-            new admin_menu(f, admin_user_name);
+            new view_appointments(f, admin_user_name);
         }
 
     }

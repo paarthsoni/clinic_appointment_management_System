@@ -51,7 +51,7 @@ public class admin_menu extends JFrame implements login_user, ActionListener {
         f.add(b3);
 
         b5 = new JButton("Delete All Today's Appointments");
-        b5.setBounds(635, 500, 340, 50);
+        b5.setBounds(630, 500, 340, 50);
         b5.setFont(new Font("Helvetica", Font.BOLD, 17));
         b5.addActionListener(this);
         f.add(b5);
@@ -70,6 +70,10 @@ public class admin_menu extends JFrame implements login_user, ActionListener {
 
         if (e.getSource() == b1) {
             new view_appointments(f, admin_user_name);
+        }
+
+        if (e.getSource() == b2) {
+            new another_admin(f, admin_user_name);
         }
 
         if (e.getSource() == b5) {

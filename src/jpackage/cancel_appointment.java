@@ -77,14 +77,14 @@ public class cancel_appointment extends JFrame implements ActionListener, login_
         t1.setFont(new Font("Helvetica", Font.BOLD, 15));
         f.add(t1);
 
-        b1 = new JButton("Cancel Appointment");
+        b1 = new JButton("Go Back to Menu");
         b1.setBounds(530, 420, 250, 35);
         b1.setFont(new Font("Helvetica", Font.BOLD, 17));
         b1.setBackground(Color.red);
         b1.addActionListener(this);
         f.add(b1);
-
-        b2 = new JButton("Go Back to Menu");
+        
+        b2 = new JButton("Cancel Appointment");
         b2.setBounds(790, 420, 250, 35);
         b2.setFont(new Font("Helvetica", Font.BOLD, 17));
         b2.setBackground(Color.green);
@@ -95,7 +95,7 @@ public class cancel_appointment extends JFrame implements ActionListener, login_
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == b1) {
+        if (e.getSource() == b2) {
             String user_username = t2.getText();
             String p_fname = t3.getText();
             String p_lname = t1.getText();
@@ -177,7 +177,7 @@ public class cancel_appointment extends JFrame implements ActionListener, login_
             }
         }
 
-        if (e.getSource() == b2)
+        if (e.getSource() == b1)
 
         {
             new menu(f, user_user_name);

@@ -153,7 +153,7 @@ class update_username extends JFrame implements ActionListener, login_user {
         f.add(showpassword);
 
         b1 = new JButton("Change Username");
-        b1.setBounds(650, 540, 250, 50);
+        b1.setBounds(650, 540, 270, 50);
         b1.setFont(new Font("Helvetica", Font.BOLD, 17));
         b1.addActionListener(this);
         b1.setBackground(Color.GREEN);
@@ -161,7 +161,7 @@ class update_username extends JFrame implements ActionListener, login_user {
         f.add(b1);
 
         b2 = new JButton("Go back to Account Settings");
-        b2.setBounds(640, 630, 270, 50);
+        b2.setBounds(650, 630, 270, 50);
         b2.setFont(new Font("Helvetica", Font.BOLD, 17));
         b2.addActionListener(this);
         b2.setBackground(Color.RED);
@@ -231,7 +231,7 @@ class update_username extends JFrame implements ActionListener, login_user {
 
         if (e.getSource() == b2) {
 
-            new account_settings(f, user_user_name);
+            new update_account(f, user_user_name);
 
         }
 
@@ -323,7 +323,7 @@ class update_password extends JFrame implements ActionListener, login_user {
         f.add(showpassword1);
 
         b1 = new JButton("Change Password");
-        b1.setBounds(650, 540, 250, 50);
+        b1.setBounds(650, 540, 270, 50);
         b1.setFont(new Font("Helvetica", Font.BOLD, 17));
         b1.addActionListener(this);
         b1.setBackground(Color.GREEN);
@@ -331,7 +331,7 @@ class update_password extends JFrame implements ActionListener, login_user {
         f.add(b1);
 
         b2 = new JButton("Go back to Account Settings");
-        b2.setBounds(640, 630, 270, 50);
+        b2.setBounds(650, 630, 270, 50);
         b2.setFont(new Font("Helvetica", Font.BOLD, 17));
         b2.addActionListener(this);
         b2.setBackground(Color.RED);
@@ -395,7 +395,7 @@ class update_password extends JFrame implements ActionListener, login_user {
 
         {
 
-            new account_settings(f, user_user_name);
+            new update_account(f, user_user_name);
 
         }
 
@@ -487,7 +487,7 @@ class update_number extends JFrame implements ActionListener, login_user {
         f.add(t3);
 
         b1 = new JButton("Change Number");
-        b1.setBounds(650, 540, 250, 50);
+        b1.setBounds(650, 540, 270, 50);
         b1.setFont(new Font("Helvetica", Font.BOLD, 17));
         b1.addActionListener(this);
         b1.setBackground(Color.GREEN);
@@ -495,7 +495,7 @@ class update_number extends JFrame implements ActionListener, login_user {
         f.add(b1);
 
         b2 = new JButton("Go back to Account Settings");
-        b2.setBounds(640, 630, 270, 50);
+        b2.setBounds(650, 630, 270, 50);
         b2.setFont(new Font("Helvetica", Font.BOLD, 17));
         b2.addActionListener(this);
         b2.setBackground(Color.RED);
@@ -567,7 +567,7 @@ class update_number extends JFrame implements ActionListener, login_user {
 
         {
 
-            new account_settings(f, user_user_name);
+            new update_account(f, user_user_name);
 
         }
 

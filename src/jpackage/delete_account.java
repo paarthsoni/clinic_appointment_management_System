@@ -69,7 +69,7 @@ public class delete_account extends JFrame implements ActionListener, login_user
         f.add(showpassword);
 
         b1 = new JButton("Delete Account");
-        b1.setBounds(650, 440, 250, 50);
+        b1.setBounds(640, 440, 270, 50);
         b1.setFont(new Font("Helvetica", Font.BOLD, 17));
         b1.addActionListener(this);
         b1.setBackground(Color.GREEN);
