@@ -26,7 +26,7 @@ public class another_admin extends JFrame implements login_user, ActionListener 
     JCheckBox showpassword, showpassword1;
     String admin_user_name;
 
-    public another_admin(JFrame f, String admin_username){
+    public another_admin(JFrame f, String admin_username) {
         admin_user_name = admin_username;
 
         f.getContentPane().removeAll();
@@ -126,7 +126,63 @@ public class another_admin extends JFrame implements login_user, ActionListener 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
+        if (e.getSource() == button1) {
+            String fullname = t1.getText();
+            String adminusername = t2.getText();
+            String adminpassword = t3.getText();
+            String confirmpassword = t4.getText();
+            boolean data = fullname.matches("^[a-zA-Z\\s]*$");
+            String jdbcURL = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d1itre8d1ofteb";
+            String username_db = "tklsjaddlzcmwj";
+            String password_db = "0a962d95cc35d5a21dc4081cf4bca8abe21fa22727cee6e31b746df3cb4ffd47";
+
+            if ((!t1.getText().equals("")) && (!t2.getText().equals("")) && (!t3.getText().equals(""))
+                    && (!t4.getText().equals(""))) {
+                if ((data) && adminusername.length() <= 15 && adminpassword.equals(confirmpassword)) {
+                    try {
+                        Connection connection = DriverManager.getConnection(jdbcURL, username_db, password_db);
+
+                        String username_check = "SELECT CASE WHEN EXISTS ( SELECT * FROM admin_account WHERE admin_username=?) THEN 'TRUE' ELSE 'FALSE' END";
+
+                        PreparedStatement statementcheck = connection.prepareStatement(username_check);
+
+                        statementcheck.setString(1, adminusername);
+                        ResultSet check = statementcheck.executeQuery();
+
+                        while (check.next()) {
+                            String value = check.getString("case");
+                            if (value.equals("FALSE")) {
+                                String insert = "insert into admin_account values(?,?,crypt(?,gen_salt('bf')))";
+                                PreparedStatement statementinsert = connection.prepareStatement(insert);
+
+                                statementinsert.setString(1, fullname);
+                                statementinsert.setString(2, adminusername);
+                                statementinsert.setString(3, adminpassword);
+                                statementinsert.executeUpdate();
+                                JOptionPane.showMessageDialog(null, "Admin Account Created Successfully");
+                                new admin_menu(f, admin_user_name);
+
+                            } else if (value.equals("TRUE")) {
+                                JOptionPane.showMessageDialog(null, "Username is not available");
+                            }
+                        }
+
+                    } catch (SQLException e1) {
+                        JOptionPane.showMessageDialog(null, "Server Error");
+                    }
+
+                } else if ((!data)) {
+                    JOptionPane.showMessageDialog(null, "Only Characters are allowed for Name");
+                } else if (adminusername.length() > 15) {
+                    JOptionPane.showMessageDialog(null, "Username should not exceed 15 characters");
+                } else if ((!adminpassword.equals(confirmpassword))) {
+                    JOptionPane.showMessageDialog(null, "Entered Password and Confirm Password does not match");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "All Inputs are required");
+            }
+        }
 
         if (e.getSource() == b2) {
             new admin_menu(f, admin_user_name);
@@ -147,7 +203,7 @@ public class another_admin extends JFrame implements login_user, ActionListener 
                 t4.setEchoChar('\u2022');
             }
         }
-        
+
     }
-    
+
 }
