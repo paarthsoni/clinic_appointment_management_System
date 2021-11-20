@@ -130,7 +130,7 @@ public class admin_menu extends JFrame implements login_user, ActionListener {
             String min = sdf1.format(date1);
             int hours = Integer.parseInt(hour);
 
-            if (hours >= 16 /* && minutesIntoTheDay >= 480 && hours <= 9 && minutesIntoTheDay <= 540 */) {
+            if (hours >= 8 && minutesIntoTheDay >= 480 && hours <= 9 && minutesIntoTheDay <= 540) {
                 String jdbcURL = "jdbc:postgresql://ec2-34-228-100-83.compute-1.amazonaws.com:5432/d1itre8d1ofteb";
                 String username_db = "tklsjaddlzcmwj";
                 String password_db = "0a962d95cc35d5a21dc4081cf4bca8abe21fa22727cee6e31b746df3cb4ffd47";
