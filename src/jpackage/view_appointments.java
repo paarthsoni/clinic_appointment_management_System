@@ -46,6 +46,7 @@ public class view_appointments extends JFrame implements ActionListener, login_u
         b3 = new JButton("Go Back to Menu");
         b3.setBounds(670, 450, 250, 50);
         b3.setFont(new Font("Helvetica", Font.BOLD, 17));
+        b3.setForeground(Color.red.darker().darker().darker().darker().darker());
         b3.setBackground(Color.red);
         b3.addActionListener(this);
         f.add(b3);
