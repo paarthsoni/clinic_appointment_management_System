@@ -72,7 +72,7 @@ public class view_appointments extends JFrame implements ActionListener, login_u
                 while (his.next()) {
                     String value = his.getString("case");
                     if (value.equals("TRUE")) {
-                        f1 = new JFrame("Appointment History");
+                        f1 = new JFrame("View Appointments");
                         // f1.setSize(500, 500);
                         f1.setExtendedState(JFrame.MAXIMIZED_BOTH);
                         f1.setDefaultLookAndFeelDecorated(true);
