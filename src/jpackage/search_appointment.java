@@ -116,7 +116,7 @@ public class search_appointment extends JFrame implements ActionListener, login_
                     String value = data.getString("case");
 
                     if (value.equals("TRUE")) {
-                        JFrame f1 = new JFrame("Appointment History");
+                        JFrame f1 = new JFrame("View Searched appointment");
                         f1.setExtendedState(JFrame.MAXIMIZED_BOTH);
                         f1.setDefaultLookAndFeelDecorated(true);
                         f1.setVisible(true);

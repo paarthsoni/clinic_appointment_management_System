@@ -265,11 +265,11 @@ class login extends JFrame implements login_user, ActionListener {
         f.getContentPane().removeAll();
         f.repaint();
 
-        JLabel background = new JLabel(new ImageIcon(
-        "E:\\Clinic_appointment_management_system\\clinic_appointment_management_System\\src\\jpackage\\image.jpg"));
-
         // JLabel background = new JLabel(new ImageIcon(
-        //         "D:\\SY Btech IT\\Java Programming\\java mini project\\mini project-java\\src\\jpackage\\image.jpg"));
+        // "E:\\Clinic_appointment_management_system\\clinic_appointment_management_System\\src\\jpackage\\image.jpg"));
+
+        JLabel background = new JLabel(new ImageIcon(
+                "D:\\SY Btech IT\\Java Programming\\java mini project\\mini project-java\\src\\jpackage\\image.jpg"));
 
         f.setContentPane(background);
 
